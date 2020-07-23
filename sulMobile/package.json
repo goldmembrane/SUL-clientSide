@@ -1,5 +1,5 @@
 {
-  "name": "sulMobile",
+  "name": "sulmobile",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.7.2",
     "@react-navigation/native": "^5.7.1",

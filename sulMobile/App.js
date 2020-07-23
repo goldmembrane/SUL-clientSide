@@ -21,6 +21,10 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import SignUp from './src/component/SignUp';
+import SignIn from './src/component/SingIn';
+import Home from './src/component/Home';
+import Search from './src/component/Search';
 
 import HomeScreen from './src/component/home/home';
 import Search from './src/component/search/search';
@@ -30,7 +34,7 @@ import User from './src/component/user/user';
 
 const Tab = createBottomTabNavigator();
 
-const App: () => React$Node = () => {
+const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
