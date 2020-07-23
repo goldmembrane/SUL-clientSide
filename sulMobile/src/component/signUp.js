@@ -6,7 +6,8 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
 } from 'react-native';
-import {TextInput, TouchableOpacity} from 'react-native';
+import {TextInput, TouchableOpacity, Alert} from 'react-native';
+import axios from 'axios';
 const styles = StyleSheet.create({
   header: {flex: 1},
   bgImage: {width: '100%', height: '100%'},
@@ -65,13 +66,36 @@ function signUp() {
   const [password, setPassword] = useState();
   const [passwordConfirm, setpasswordConfirm] = useState();
 
+  function fetchSignUp() {
+    console.log('signup start');
+    const apiUrl = 'http://localhost:3001';
+    const userInfo = {
+      email,
+      username: id,
+      password,
+    };
+    axios
+      .post(apiUrl + '/users/signUp', userInfo)
+      .then((data) => {
+        if (data.status === 200) {
+          Alert.alert('가입되었습니다');
+          // props.navigtion.navigate('Home')
+        } else {
+          Alert.alert('입력정보가 옳바르지 않습니다');
+        }
+      })
+      .catch((e) => {
+        console.log(e, 'err');
+        Alert.alert('error');
+      });
+  }
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
       style={{flex: 1}}>
       <View style={[styles.row, styles.header]}>
         <ImageBackground
-          source={require('./iu.jpg')}
+          source={require('../img/iu.jpg')}
           style={styles.bgImage}
           // resizeMethod="cover"
         >
@@ -80,6 +104,7 @@ function signUp() {
           </View>
           <View style={styles.main}>
             <TextInput
+              autoFocus={true}
               style={styles.inputBox}
               underlineColorAndroid="'rgba(0, 0,0,0.5)',"
               placeholder="Email"
@@ -89,14 +114,13 @@ function signUp() {
               autoCapitalize="none"
               onChangeText={(text) => {
                 setEmail(text);
-                console.log(email, 'email');
+                // console.log(email, 'email');
               }}
               returnKeyType="next"
               onSubmitEditing={() => {
                 this.id.focus();
               }}
               blurOnSubmit={false}
-              onSubmitEditing={() => this.password.focus()}
             />
             <TextInput
               style={styles.inputBox}
@@ -107,7 +131,9 @@ function signUp() {
               //"#ffffff"
               selectionColor="#fff"
               returnKeyType="next"
-              // onSubmitEditing={() => this.password.focus()}
+              onChangeText={(text) => {
+                setId(text);
+              }}
               ref={(input) => {
                 this.id = input;
               }}
@@ -121,8 +147,10 @@ function signUp() {
               placeholder="Password"
               secureTextEntry={true}
               placeholderTextColor="'rgba(255, 255,255,0.5)',"
-              // ref={(input) => (this.password = input)}
               returnKeyType="next"
+              onChangeText={(text) => {
+                setPassword(text);
+              }}
               ref={(input) => {
                 this.password = input;
               }}
@@ -136,11 +164,14 @@ function signUp() {
               placeholder="Password Confirm"
               secureTextEntry={true}
               placeholderTextColor="'rgba(255, 255,255,0.5)',"
+              onChangeText={(text) => {
+                setpasswordConfirm(text);
+              }}
               ref={(input) => {
                 this.passwordConfirm = input;
               }}
             />
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={fetchSignUp}>
               <Text style={styles.buttonText}>회원가입</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.loginButton}>

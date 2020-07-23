@@ -23,14 +23,15 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import SignUp from './src/component/signUp';
-import Tmp from './src/component/tmp';
+import SignUp from './src/component/SignUp';
+import SignIn from './src/component/SingIn';
+import Home from './src/component/Home';
+import Search from './src/component/Search';
 
 const App: () => React$Node = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <Tmp />
       {/* <SafeAreaView>
         
         <ScrollView
