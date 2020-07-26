@@ -68,7 +68,7 @@ function signUp() {
 
   function fetchSignUp() {
     console.log('signup start');
-    const apiUrl = 'http://localhost:3001';
+    const apiUrl = 'http://localhost:3000';
     const userInfo = {
       email,
       username: id,

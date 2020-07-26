@@ -85,7 +85,7 @@ function signIn() {
       return;
     }
     console.log('signin start');
-    const apiUrl = 'http://localhost:3002';
+    const apiUrl = 'http://localhost:3000';
     const userInfo = {
       email,
       password,
