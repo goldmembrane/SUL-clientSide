@@ -8,6 +8,9 @@ import {
 } from 'react-native';
 import {TextInput, TouchableOpacity, Alert} from 'react-native';
 import axios from 'axios';
+
+// import useIsLoggedin from '../hooks/useIsLoggedin';
+// import {isLoggedin} from '../store/modules/counter';
 const styles = StyleSheet.create({
   header: {flex: 1},
   bgImage: {width: '100%', height: '100%'},
@@ -73,13 +76,20 @@ const styles = StyleSheet.create({
   },
 });
 
-function signIn() {
+function signIn({onSignin}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validata, setValidata] = useState(false);
   const [errmsg, setErrmsg] = useState('');
   const [passmsg, setPassmsg] = useState('');
   // let errText = null;
+
+  // const {handleSubmit, isLoggedin} = useIsLoggedin();
+
+  const handleSignin = () => {
+    onSignin(true);
+  };
+
   function fetchSignIn(errmsg, password) {
     if (errmsg.length > 0 || password.length < 4) {
       return;
@@ -90,10 +100,12 @@ function signIn() {
       email,
       password,
     };
+    console.log(userInfo);
     axios
       .post(apiUrl + '/users/signIn', userInfo)
       .then((data) => {
         if (data.status === 200) {
+          // handleSignin();
           Alert.alert('로그인되었습니다');
           // props.navigtion.navigate('Home')
         } else {
@@ -105,6 +117,7 @@ function signIn() {
         Alert.alert('error');
       });
   }
+
   function chkPassword(str) {
     if (str.length < 4) {
       setPassmsg('비밀번호를 입력해 주세요');
@@ -113,6 +126,7 @@ function signIn() {
     }
     return;
   }
+
   function chkEmail(str) {
     let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     if (regExp.test(str) === false) {

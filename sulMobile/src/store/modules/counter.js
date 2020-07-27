@@ -9,7 +9,7 @@ export const isLoggedin = (bool) => ({
 
 // 초기상태 정의
 const initialState = {
-  bool: false,
+  isLoggedin: false,
 };
 
 // 리듀서 작성
@@ -18,7 +18,7 @@ export default function counter(state = initialState, action) {
     case IS_LOGGEDIN:
       return {
         ...state,
-        bool: action.bool,
+        isLoggedin: action.bool,
       };
 
     default:

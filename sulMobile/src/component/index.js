@@ -30,16 +30,20 @@ import Information from './information/information';
 import User from './user/user';
 
 import SignUp from './signUp';
-import SignIn from './signIn';
+import SigninContainer from '../container/SigninContainer';
+
+import useIsLoggedin from '../hooks/useIsLoggedin';
 
 const Tab = createBottomTabNavigator();
-// const Stack = createStackNavigator();
+const Stack = createStackNavigator();
 
-class Index extends React.Component {
-  render() {
-    return (
-      <NavigationContainer>
-        {/* {store.counter.bool ? ( */}
+function Index() {
+  const {isLoggedin} = useIsLoggedin();
+  // return isLoggedin ? <View>true</View> : <View>false</View>;
+
+  return (
+    <NavigationContainer>
+      {isLoggedin ? (
         <Tab.Navigator>
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Search" component={Search} />
@@ -47,12 +51,14 @@ class Index extends React.Component {
           <Tab.Screen name="Information" component={Information} />
           <Tab.Screen name="User" component={User} />
         </Tab.Navigator>
-        {/* ) : (
-          <Stack.Screen name="SignIn" component={SignIn} />
-        )} */}
-      </NavigationContainer>
-    );
-  }
+      ) : (
+        // <Stack.Screen name="SignIn" component={SignIn} />
+        <Tab.Navigator>
+          <Tab.Screen name="Signin" component={SigninContainer} />
+        </Tab.Navigator>
+      )}
+    </NavigationContainer>
+  );
 }
 
 export default Index;

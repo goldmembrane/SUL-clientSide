@@ -12,7 +12,7 @@ export default combineReducers({
 
   {
       counter: {
-          bool: false,
+          isLoggedin: false,
       },
       // 합치면 초기값이 여기에 객체 형태로 들어옴
   }
