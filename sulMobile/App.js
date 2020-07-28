@@ -22,7 +22,7 @@ import SignIn from './src/component/SignIn';
 import Map from './src/component/map/map';
 import Information from './src/component/information/information';
 import UserInfo from './src/component/user/UserInfo';
-import Ex from './src/component/user/ex';
+import Ex from './src/component/user/PicProfile';
 const Tab = createBottomTabNavigator();
 
 const App = () => {
