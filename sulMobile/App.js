@@ -14,24 +14,15 @@ import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import SignUp from './src/component/SignUp';
-import SignIn from './src/component/SingIn';
-import Home from './src/component/Home';
-import Search from './src/component/Search';
-
 import HomeScreen from './src/component/home/home';
-import Search from './src/component/search/search';
+import Search from './src/component/search/Search';
+import Analysis from './src/component/search/Analysis';
+import SignUp from './src/component/SignUp';
+import SignIn from './src/component/SignIn';
 import Map from './src/component/map/map';
 import Information from './src/component/information/information';
-import User from './src/component/user/user';
-
+import UserInfo from './src/component/user/UserInfo';
+import Ex from './src/component/user/ex';
 const Tab = createBottomTabNavigator();
 
 const App = () => {
@@ -39,10 +30,11 @@ const App = () => {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="SignIn" component={SignIn} />
+        <Tab.Screen name="SignUp" component={SignUp} />
         <Tab.Screen name="Search" component={Search} />
-        <Tab.Screen name="Map" component={Map} />
         <Tab.Screen name="Information" component={Information} />
-        <Tab.Screen name="User" component={User} />
+        <Tab.Screen name="User" component={UserInfo} />
       </Tab.Navigator>
     </NavigationContainer>
   );
