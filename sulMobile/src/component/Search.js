@@ -86,12 +86,6 @@ function Search() {
     'notClick',
     'notClick',
   ]);
-  const [clickedClassNameSecond, setClickedClassNameSecond] = useState(
-    'notClick',
-  );
-  const [clickedClassNameThird, setClickedClassNameThird] = useState(
-    'notClick',
-  );
   function selectOne(num) {
     if (num < 0 || num > 2) return;
     if (num === 0) {
