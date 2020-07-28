@@ -19,3 +19,11 @@ export function fetchSignUp(email, id, password) {
   };
   return axios.post(baseUrl + '/users/signUp', userInfo);
 }
+
+export function fetchUserInfoGet() {
+  return axios.get(baseUrl + '/users/info');
+}
+
+export function signOut() {
+  return axios.post(baseUrl + '/users/signOut', {});
+}
