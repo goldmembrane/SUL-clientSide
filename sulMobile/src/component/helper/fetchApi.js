@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'http://localhost:3001';
 
 export function fetchSignIn(email, password) {
   console.log('signin fetch start');
@@ -22,6 +22,12 @@ export function fetchSignUp(email, id, password) {
 
 export function fetchUserInfoGet() {
   return axios.get(baseUrl + '/users/info');
+}
+export function putUserInfo(username) {
+  const userInfo = {
+    username,
+  };
+  return axios.put(baseUrl + '/users/info', userInfo);
 }
 
 export function postSignOut() {

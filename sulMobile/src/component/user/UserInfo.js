@@ -16,6 +16,7 @@ import {fetchUserInfoGet} from '../helper/fetchApi';
 import PicProfile from './PicProfile';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SignOut from './SignOut';
+import {putUserInfo} from '../helper/fetchApi';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 const styles = StyleSheet.create({
@@ -173,7 +174,25 @@ export default function UserInfo(props) {
     setUserPicUrl(url);
     console.log(userPicUrl, 'pic url');
   };
-
+  function toPutUserInfo() {
+    putUserInfo(userName)
+      .then((data) => {
+        if (data.data.message == 'Success') {
+          Alert.alert('Success.');
+        }
+      })
+      .catch((e) => {
+        if (e.response.status === 401) {
+          Alert.alert('need user session.');
+        } else {
+          Alert.alert('Update Errorr', '', {cancelable: false});
+        }
+      });
+  }
+  function cancleInfo() {
+    setUserPicUrl('');
+    setUserName('');
+  }
   return (
     <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
       {isLogin ? (
@@ -239,6 +258,7 @@ export default function UserInfo(props) {
                     onPress={() => {
                       setIsEdit(false);
                       setIsEdName(false);
+                      toPutUserInfo();
                     }}>
                     수정완료
                   </Text>
@@ -247,6 +267,7 @@ export default function UserInfo(props) {
                     onPress={() => {
                       setIsEdit(false);
                       setIsEdName(false);
+                      cancleInfo();
                     }}>
                     취소
                   </Text>
