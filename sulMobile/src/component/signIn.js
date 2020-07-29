@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function signIn({navigation, onSignin}) {
+function signIn({onSignin}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validata, setValidata] = useState(false);
@@ -120,7 +120,7 @@ function signIn({navigation, onSignin}) {
           Alert.alert(
             'error',
             '로그인에 문제가 있습니다',
-            [{text: '확인', onPress: () => navigation.navigate('Home')}],
+            // [{text: '확인', onPress: () => navigation.navigate('Home')}],
             {cancelable: false},
           );
         }

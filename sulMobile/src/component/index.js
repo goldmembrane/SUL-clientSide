@@ -54,7 +54,7 @@ function Index() {
       ) : (
         // <Stack.Screen name="SignIn" component={SignIn} />
         <Tab.Navigator>
-          <Tab.Screen name="Signin" component={SigninContainer} />
+          <Tab.Screen name="signin" component={SigninContainer} />
         </Tab.Navigator>
       )}
     </NavigationContainer>
