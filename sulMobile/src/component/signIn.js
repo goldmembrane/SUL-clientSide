@@ -3,14 +3,14 @@ import {
   StyleSheet,
   View,
   Text,
+  Keyboard,
   ImageBackground,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {TextInput, TouchableOpacity, Alert} from 'react-native';
-import axios from 'axios';
+import {fetchSignIn} from './helper/fetchApi';
 
-// import useIsLoggedin from '../hooks/useIsLoggedin';
-// import {isLoggedin} from '../store/modules/counter';
 const styles = StyleSheet.create({
   header: {flex: 1},
   bgImage: {width: '100%', height: '100%'},
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function signIn({onSignin}) {
+function signIn({navigation, onSignin}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validata, setValidata] = useState(false);
@@ -84,49 +84,58 @@ function signIn({onSignin}) {
   const [passmsg, setPassmsg] = useState('');
   // let errText = null;
 
-  // const {handleSubmit, isLoggedin} = useIsLoggedin();
-
   const handleSignin = () => {
     onSignin(true);
   };
-
-  function fetchSignIn(errmsg, password) {
-    if (errmsg.length > 0 || password.length < 4) {
+  function toFetchSignIn(email, password) {
+    if (!chkEmail(email) || !chkPassword(password)) {
       return;
     }
-    console.log('signin start');
-    const apiUrl = 'http://localhost:3000';
-    const userInfo = {
-      email,
-      password,
-    };
-    console.log(userInfo);
-    axios
-      .post(apiUrl + '/users/signIn', userInfo)
+    fetchSignIn(email, password)
       .then((data) => {
         if (data.status === 200) {
-          // handleSignin();
-          Alert.alert('로그인되었습니다');
+          // Alert.alert('로그인되었습니다');
+          Alert.alert(
+            '로그인 하였습니다.',
+            '',
+            // [{text: '확인', onPress: () => navigation.navigate('Home')}],
+            {cancelable: false},
+          );
+          handleSignin();
           // props.navigtion.navigate('Home')
         } else {
           Alert.alert('입력정보가 올바르지 않습니다');
         }
       })
       .catch((e) => {
-        console.log(e, 'err');
-        Alert.alert('error');
+        // Alert.alert(
+        //   'error',
+        //   '로그인에 문제가 있습니다',
+        //   [{text: '확인', onPress: () => navigation.navigate('Home')}],
+        //   {cancelable: false},
+        // );
+        if (e.response.status === 404) {
+          Alert.alert('아이디나 비밀번호가 맞지 않습니다.');
+        } else {
+          Alert.alert(
+            'error',
+            '로그인에 문제가 있습니다',
+            [{text: '확인', onPress: () => navigation.navigate('Home')}],
+            {cancelable: false},
+          );
+        }
       });
   }
 
   function chkPassword(str) {
     if (str.length < 4) {
-      setPassmsg('비밀번호를 입력해 주세요');
+      setPassmsg('비밀번호를 4자 이상 입력해 주세요');
+      return false;
     } else {
       setPassmsg('');
+      return true;
     }
-    return;
   }
-
   function chkEmail(str) {
     let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     if (regExp.test(str) === false) {
@@ -136,74 +145,81 @@ function signIn({onSignin}) {
     }
     return regExp.test(str) ? true : false;
   }
+  _onPressEmptySpace = () => {
+    Keyboard.dismiss();
+  };
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={{flex: 1}}>
-      <View style={[styles.row, styles.header]}>
-        <ImageBackground
-          source={require('../img/iu.jpg')}
-          style={styles.bgImage}
-          // resizeMethod="cover"
-        >
-          <View style={styles.titleBox}>
-            <Text style={styles.title}>SUL team</Text>
-          </View>
-          <View style={styles.main}>
-            <TextInput
-              autoFocus={true}
-              style={styles.inputBox}
-              underlineColorAndroid="'rgba(0, 0,0,0.5)',"
-              placeholder="Email"
-              placeholderTextColor="'rgba(255, 255,255,0.5)',"
-              selectionColor="#fff"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              onChangeText={(text) => {
-                setEmail(text);
-                chkEmail(text);
-                // console.log(email, 'email');
-              }}
-              returnKeyType="next"
-              onSubmitEditing={() => {
-                this.password.focus();
-              }}
-              blurOnSubmit={false}
-            />
-            <View style={styles.msgBox}>
-              <Text style={styles.errmsg}>{errmsg}</Text>
+    <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        style={{flex: 1}}>
+        <View style={[styles.row, styles.header]}>
+          <ImageBackground
+            source={require('../img/iu.jpg')}
+            style={styles.bgImage}
+            // resizeMethod="cover"
+          >
+            <View style={styles.titleBox}>
+              <Text style={styles.title}>SUL team</Text>
             </View>
-            <TextInput
-              style={styles.inputBox}
-              underlineColorAndroid="rgba(0,0,0,0)"
-              placeholder="Password"
-              secureTextEntry={true}
-              placeholderTextColor="'rgba(255, 255,255,0.5)',"
-              returnKeyType="next"
-              onChangeText={(text) => {
-                setPassword(text);
-                chkPassword(text);
-              }}
-              ref={(input) => {
-                this.password = input;
-              }}
-            />
-            <View style={styles.msgBox}>
-              <Text style={styles.errmsg}>{passmsg}</Text>
+            <View style={styles.main}>
+              <TextInput
+                autoFocus={true}
+                style={styles.inputBox}
+                underlineColorAndroid="'rgba(0, 0,0,0.5)',"
+                placeholder="Email"
+                placeholderTextColor="'rgba(255, 255,255,0.5)',"
+                selectionColor="#fff"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                onChangeText={(text) => {
+                  setEmail(text);
+                  chkEmail(text);
+                  // console.log(email, 'email');
+                }}
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  this.password.focus();
+                }}
+                blurOnSubmit={false}
+              />
+              <View style={styles.msgBox}>
+                <Text style={styles.errmsg}>{errmsg}</Text>
+              </View>
+              <TextInput
+                style={styles.inputBox}
+                underlineColorAndroid="rgba(0,0,0,0)"
+                placeholder="Password"
+                secureTextEntry={true}
+                placeholderTextColor="'rgba(255, 255,255,0.5)',"
+                returnKeyType="next"
+                onChangeText={(text) => {
+                  setPassword(text);
+                  chkPassword(text);
+                }}
+                ref={(input) => {
+                  this.password = input;
+                }}
+              />
+              <View style={styles.msgBox}>
+                <Text style={styles.errmsg}>{passmsg}</Text>
+              </View>
+              <View style={styles.blankBox}></View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('SignUp')}>
+                <Text style={styles.buttonText}>회원가입</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.loginButton}
+                onPress={() => toFetchSignIn(email, password)}>
+                <Text style={styles.buttonText}>로그인</Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.blankBox}></View>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>회원가입</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.loginButton}
-              onPress={() => fetchSignIn(errmsg, password)}>
-              <Text style={styles.buttonText}>로그인</Text>
-            </TouchableOpacity>
-          </View>
-        </ImageBackground>
-      </View>
-    </KeyboardAvoidingView>
+          </ImageBackground>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 

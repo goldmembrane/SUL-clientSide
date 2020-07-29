@@ -4,13 +4,21 @@ import {
   View,
   Text,
   Keyboard,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {TextInput} from 'react-native';
+import {TextInput, TouchableOpacity} from 'react-native';
+import fakeData from './fakeData';
+import SearchList from './SearchList';
+
 const styles = StyleSheet.create({
-  header: {marginTop: 70, justifyContent: 'flex-end'},
-  body: {flex: 6, justifyContent: 'center'},
+  all: {flex: 1, backgroundColor: 'white'},
+  header: {marginTop: 70, justifyContent: 'flex-end', backgroundColor: 'white'},
+  body: {
+    flex: 6,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    width: '100%',
+  },
   title: {
     fontSize: 24,
     color: 'gray',
@@ -69,6 +77,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   main: {
+    flex: 1,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 50,
@@ -78,20 +88,31 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 24,
   },
+  analysis__button: {
+    width: '70%',
+    height: 50,
+    borderRadius: 25,
+    position: 'absolute',
+    bottom: 30,
+    backgroundColor: '#82A3D6',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  analysis__button__text: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 24,
+  },
 });
 
 function Search() {
+  const [searchText, setSearchText] = useState(['']);
   const [clickedClassName, setClickedClassName] = useState([
     'click',
     'notClick',
     'notClick',
   ]);
-  const [clickedClassNameSecond, setClickedClassNameSecond] = useState(
-    'notClick',
-  );
-  const [clickedClassNameThird, setClickedClassNameThird] = useState(
-    'notClick',
-  );
+  const [lawData, setLawData] = useState([]);
   function selectOne(num) {
     if (num < 0 || num > 2) return;
     if (num === 0) {
@@ -105,11 +126,16 @@ function Search() {
   _onPressEmptySpace = () => {
     Keyboard.dismiss();
   };
+  const searchHandler = () => {
+    if (searchText.length > 0) {
+      setLawData(fakeData);
+    } else {
+      setLawData([]);
+    }
+  };
   return (
     <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        style={{flex: 1}}>
+      <View style={styles.all}>
         <View style={styles.header}>
           <View style={styles.titleBox}>
             <Text style={styles.title}>SUL team</Text>
@@ -123,11 +149,13 @@ function Search() {
               placeholderTextColor="'rgba(0, 0,0,0.5)',"
               selectionColor="#fff"
               autoCapitalize="none"
-              // onChangeText={(text) => {
-              //   setEmail(text);
-              //   chkEmail(text);
-              //   // console.log(email, 'email');
-              // }}
+              onChangeText={(text) => {
+                setSearchText(text);
+              }}
+              onSubmitEditing={() => {
+                searchHandler();
+                // console.log(lawData, 'lawdata');
+              }}
             />
           </View>
           <View style={styles.tabbar}>
@@ -151,10 +179,21 @@ function Search() {
 
         <View style={styles.body}>
           <View style={styles.main}>
-            <Text style={styles.mainText}>키워드를 입력해 주세요</Text>
+            {lawData?.length ? (
+              <>
+                <SearchList laws={lawData} />
+                {/* <View style={styles.analysis__button}> */}
+                <TouchableOpacity style={styles.analysis__button}>
+                  <Text style={styles.analysis__button__text}>분석하기</Text>
+                </TouchableOpacity>
+                {/* </View> */}
+              </>
+            ) : (
+              <Text style={styles.mainText}>키워드를 입력해 주세요</Text>
+            )}
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 }
