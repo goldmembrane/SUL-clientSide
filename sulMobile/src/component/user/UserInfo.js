@@ -15,6 +15,7 @@ import SULteamTitle from '../header/SULteamTitle';
 import {fetchUserInfoGet} from '../helper/fetchApi';
 import PicProfile from './PicProfile';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SignOut from './SignOut';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 const styles = StyleSheet.create({
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function UserInfo() {
+export default function UserInfo(props) {
   const [isLogin, setIsLogin] = useState(false);
   const [userInfo, setUserInfo] = useState({id: '', username: '', email: ''});
   //수정전 임시 저장
@@ -228,7 +229,8 @@ export default function UserInfo() {
               </View>
             </View>
             <View style={styles.profileInfoBox}>
-              <Text style={styles.profileInfoBox__logout}>Logout</Text>
+              <SignOut {...props} />
+              {/* <Text style={styles.profileInfoBox__logout}>Logout</Text> */}
               <Text style={styles.profileInfoBox__text}>{userInfo.email}</Text>
               {isEdit ? (
                 <View style={styles.profileInfoBox__okcanclebox}>

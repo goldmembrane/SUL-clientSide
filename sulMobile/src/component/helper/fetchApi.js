@@ -24,6 +24,6 @@ export function fetchUserInfoGet() {
   return axios.get(baseUrl + '/users/info');
 }
 
-export function signOut() {
+export function postSignOut() {
   return axios.post(baseUrl + '/users/signOut', {});
 }
