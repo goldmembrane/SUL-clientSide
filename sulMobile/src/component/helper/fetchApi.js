@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3001';
+const baseUrl = 'http://localhost:3000';
 
 export function fetchSignIn(email, password) {
   console.log('signin fetch start');
