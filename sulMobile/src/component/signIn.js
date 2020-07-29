@@ -76,13 +76,17 @@ const styles = StyleSheet.create({
   },
 });
 
-function signIn({navigation}) {
+function signIn({onSignin}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validata, setValidata] = useState(false);
   const [errmsg, setErrmsg] = useState('');
   const [passmsg, setPassmsg] = useState('');
   // let errText = null;
+
+  const handleSignin = () => {
+    onSignin(true);
+  };
   function toFetchSignIn(email, password) {
     if (!chkEmail(email) || !chkPassword(password)) {
       return;
@@ -94,9 +98,10 @@ function signIn({navigation}) {
           Alert.alert(
             '로그인 하였습니다.',
             '',
-            [{text: '확인', onPress: () => navigation.navigate('Home')}],
+            // [{text: '확인', onPress: () => navigation.navigate('Home')}],
             {cancelable: false},
           );
+          handleSignin();
           // props.navigtion.navigate('Home')
         } else {
           Alert.alert('입력정보가 올바르지 않습니다');
@@ -115,7 +120,7 @@ function signIn({navigation}) {
           Alert.alert(
             'error',
             '로그인에 문제가 있습니다',
-            [{text: '확인', onPress: () => navigation.navigate('Home')}],
+            // [{text: '확인', onPress: () => navigation.navigate('Home')}],
             {cancelable: false},
           );
         }
