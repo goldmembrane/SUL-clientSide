@@ -17,7 +17,7 @@ import PicProfile from './PicProfile';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SignOut from './SignOut';
 import {putUserInfo} from '../helper/fetchApi';
-
+import {lawgo} from '../helper/fetchApi';
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 const styles = StyleSheet.create({
   all: {flex: 1, backgroundColor: 'white'},
@@ -166,7 +166,11 @@ export default function UserInfo(props) {
         }
       });
   }, []);
-
+  function aa() {
+    lawgo.then((data) => {
+      console.log(data.data);
+    });
+  }
   _onPressEmptySpace = () => {
     Keyboard.dismiss();
   };

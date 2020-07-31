@@ -37,6 +37,7 @@ export function postSignOut() {
 }
 
 export function fetchJudicial(keywords) {
+  console.log('start');
   //키워드로 검색
   const obj = {
     keywords,
@@ -50,4 +51,16 @@ export function fetchJudicialGet(keywords) {
       keyword: keywords,
     },
   });
+}
+
+export function lawgo(keywords) {
+  //키워드로 검색
+  return axios.get(
+    'http://www.law.go.kr/LSW/precInfoP.do?precSeq=77690&mode=0',
+    {
+      // params: {
+      //   keyword: keywords,
+      // },
+    },
+  );
 }
