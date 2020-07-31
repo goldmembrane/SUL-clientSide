@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text, Dimensions, Alert} from 'react-native';
 import {postSignOut} from '../helper/fetchApi';
+import useConfirmLogin from '../../hooks/useConfirmLogin';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 const styles = StyleSheet.create({
@@ -11,15 +12,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
 function SignOut({navigation}) {
+  const onConfirmLogin = useConfirmLogin();
   function goSignOut() {
     postSignOut().then(() => {
-      Alert.alert(
-        '로그아웃 하였습니다.',
-        '',
-        [{text: '확인', onPress: () => navigation.navigate('Home')}],
-        {cancelable: false},
-      );
+      Alert.alert('로그아웃 하였습니다.', '');
+      onConfirmLogin(false);
     });
     //navigation.navigate('Home')
   }

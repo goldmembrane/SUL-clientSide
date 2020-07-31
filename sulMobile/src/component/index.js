@@ -23,43 +23,68 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import HomeScreen from './home/home';
 import Search from './search/search';
 import Map from './map/map';
 import Information from './information/information';
-import User from './user/user';
-import Info from './user/UserInfo';
-// import SignUp from './SignUp';
-import SigninContainer from '../container/SigninContainer';
 import UserInfo from './user/UserInfo';
-import SignUp from './SignUp';
+
+import SignUp from './signUp';
+import SignIn from './signIn';
+
 import useIsLoggedin from '../hooks/useIsLoggedin';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function Index() {
-  const {isLoggedin} = useIsLoggedin();
+function Index(props) {
+  const isLoggedin = useIsLoggedin();
+  console.log('isLoggedin : ', isLoggedin);
   // return isLoggedin ? <View>true</View> : <View>false</View>;
-
+  console.log('props :', props);
   return (
     <NavigationContainer>
       {isLoggedin ? (
-        <Tab.Navigator>
+        <Tab.Navigator
+          screenOptions={({route}) => ({
+            tabBarLabel: '',
+            tabBarIcon: ({focused, size}) => {
+              let iconName;
+
+              if (route.name === 'Home') {
+                iconName = focused ? 'home' : 'home-outline';
+              } else if (route.name === 'Search') {
+                iconName = focused ? 'search' : 'search-outline';
+              } else if (route.name === 'Map') {
+                iconName = focused ? 'map' : 'map-outline';
+              } else if (route.name === 'Information') {
+                iconName = focused
+                  ? 'information-circle'
+                  : 'information-circle-outline';
+              } else if (route.name === 'UserInfo') {
+                iconName = focused ? 'person' : 'person-outline';
+              }
+
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} />;
+            },
+          })}>
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Search" component={Search} />
           <Tab.Screen name="Map" component={Map} />
           <Tab.Screen name="Information" component={Information} />
-          <Tab.Screen name="User" component={User} />
+          <Tab.Screen name="UserInfo" component={UserInfo} />
         </Tab.Navigator>
       ) : (
         // <Stack.Screen name="SignIn" component={SignIn} />
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="signin" component={SigninContainer} />
-          <Tab.Screen name="signUp" component={SignUp} />
-          <Tab.Screen name="Search" component={Search} />
-          <Tab.Screen name="UserInfo" component={UserInfo} />
+        <Tab.Navigator
+          screenOptions={({route}) => ({
+            tabBarVisible: false,
+          })}>
+          <Tab.Screen name="signin" component={SignIn} />
+          <Tab.Screen name="signup" component={SignUp} />
         </Tab.Navigator>
       )}
     </NavigationContainer>

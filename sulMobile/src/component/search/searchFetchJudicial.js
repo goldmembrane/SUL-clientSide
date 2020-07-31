@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, View, TextInput, Text, Alert} from 'react-native';
 import {fetchJudicial} from '../helper/fetchApi';
 import {fetchJudicialGet} from '../helper/fetchApi';
-import fakeData from './fakeData';
 
 const styles = StyleSheet.create({
   inputBox: {
@@ -57,9 +56,8 @@ function SearchFetchJudicial(props) {
       .then((data) => {
         return console.log(data.data, 'search data');
       })
-      // .then(() => fetchGetSearch())
+      .then(() => fetchGetSearch())
       .catch((e) => {
-        console.log(e, 'err');
         Alert.alert(
           'error',
           '',

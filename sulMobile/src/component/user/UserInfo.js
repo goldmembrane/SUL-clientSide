@@ -26,8 +26,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     backgroundColor: 'white',
   },
+  username: {
+    flex: 0.5,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 24,
+  },
   infoBox: {
-    flex: 4,
+    flex: 2,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -139,7 +146,6 @@ export default function UserInfo(props) {
         if (data.status === 200) {
           setIsLogin(true);
           setUserInfo(data.data);
-          Alert.alert('로그인되었습니다');
           // console.log(userInfo, 'data');
           // Alert.alert(
           //   '로그인 하였습니다.',
@@ -183,6 +189,7 @@ export default function UserInfo(props) {
       .then((data) => {
         if (data.data.message == 'Success') {
           Alert.alert('Success.');
+          setUserInfo({...userInfo, username: userName});
         }
       })
       .catch((e) => {
@@ -207,6 +214,27 @@ export default function UserInfo(props) {
             <Text style={styles.title}>SUL team</Text>
           </View> */}
           </View>
+          <View style={styles.username}>
+            {isEdName ? (
+              <TextInput
+                style={styles.inputBox}
+                underlineColorAndroid="rgba(0,0,0,0)"
+                placeholder="username"
+                placeholderTextColor="'rgba(255, 255,255,0.5)',"
+                autoCapitalize="none"
+                //"#ffffff"
+                defaultValue={userInfo.username}
+                selectionColor="black"
+                onChangeText={(text) => {
+                  setUserName(text);
+                }}
+              />
+            ) : (
+              <Text style={{color: 'black', fontSize: 20}}>
+                {userInfo.username}
+              </Text>
+            )}
+          </View>
           <View style={styles.infoBox}>
             <View style={styles.profilePicBox}>
               {/* <View style={styles.circle}></View>
@@ -229,25 +257,7 @@ export default function UserInfo(props) {
                 ) : (
                   <></>
                 )}
-                {isEdName ? (
-                  <TextInput
-                    style={styles.inputBox}
-                    underlineColorAndroid="rgba(0,0,0,0)"
-                    placeholder="username"
-                    placeholderTextColor="'rgba(255, 255,255,0.5)',"
-                    autoCapitalize="none"
-                    //"#ffffff"
-                    defaultValue={userInfo.username}
-                    selectionColor="black"
-                    onChangeText={(text) => {
-                      setUserName(text);
-                    }}
-                  />
-                ) : (
-                  <Text style={{color: 'black', fontSize: 16}}>
-                    {userInfo.username}님
-                  </Text>
-                )}
+
                 {/* <Text style={{color: 'black'}}>{userInfo.username}님</Text> */}
               </View>
             </View>
@@ -290,10 +300,10 @@ export default function UserInfo(props) {
 
             {/* </View> */}
           </View>
+          <View>
+            <Text style={styles.history__maintitle}>History</Text>
+          </View>
           <View style={styles.history}>
-            <View>
-              <Text style={styles.history__maintitle}>History</Text>
-            </View>
             <View style={styles.history__contentbox}>
               <View style={{paddingLeft: 20, width: '85%'}}>
                 <Text style={styles.history__content__title}>
