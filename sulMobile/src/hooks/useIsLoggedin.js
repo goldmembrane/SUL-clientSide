@@ -1,16 +1,6 @@
-import {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
 
-const useIsLoggedin = () => {
-  const [isLoggedin, setIsLoggedin] = useState(false);
-
-  const handleSubmit = () => {
-    setIsLoggedin(true);
-  };
-
-  return {
-    handleSubmit,
-    isLoggedin,
-  };
-};
-
-export default useIsLoggedin;
+export default function useIsLoggedin() {
+  const isLoggedin = useSelector((state) => state.counter.isLoggedin);
+  return isLoggedin;
+}
