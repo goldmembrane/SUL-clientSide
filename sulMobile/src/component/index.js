@@ -32,6 +32,7 @@ import Info from './user/UserInfo';
 // import SignUp from './SignUp';
 import SigninContainer from '../container/SigninContainer';
 import UserInfo from './user/UserInfo';
+import SignUp from './SignUp';
 import useIsLoggedin from '../hooks/useIsLoggedin';
 
 const Tab = createBottomTabNavigator();
@@ -56,6 +57,8 @@ function Index() {
         <Tab.Navigator>
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="signin" component={SigninContainer} />
+          <Tab.Screen name="signUp" component={SignUp} />
+          <Tab.Screen name="Search" component={Search} />
           <Tab.Screen name="UserInfo" component={UserInfo} />
         </Tab.Navigator>
       )}

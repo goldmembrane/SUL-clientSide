@@ -206,14 +206,14 @@ function signIn({onSignin, navigation}) {
               </View>
               <View style={styles.blankBox}></View>
               <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('SignUp')}>
-                <Text style={styles.buttonText}>회원가입</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
                 style={styles.loginButton}
                 onPress={() => toFetchSignIn(email, password)}>
                 <Text style={styles.buttonText}>로그인</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('SignUp')}>
+                <Text style={styles.buttonText}>회원가입</Text>
               </TouchableOpacity>
             </View>
           </ImageBackground>
