@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function signIn({onSignin}) {
+function signIn({onSignin, navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validata, setValidata] = useState(false);
@@ -98,7 +98,7 @@ function signIn({onSignin}) {
           Alert.alert(
             '로그인 하였습니다.',
             '',
-            // [{text: '확인', onPress: () => navigation.navigate('Home')}],
+            [{text: '확인', onPress: () => navigation.navigate('Home')}],
             {cancelable: false},
           );
           handleSignin();
@@ -206,14 +206,14 @@ function signIn({onSignin}) {
               </View>
               <View style={styles.blankBox}></View>
               <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('SignUp')}>
-                <Text style={styles.buttonText}>회원가입</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
                 style={styles.loginButton}
                 onPress={() => toFetchSignIn(email, password)}>
                 <Text style={styles.buttonText}>로그인</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('SignUp')}>
+                <Text style={styles.buttonText}>회원가입</Text>
               </TouchableOpacity>
             </View>
           </ImageBackground>
