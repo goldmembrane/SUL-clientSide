@@ -23,6 +23,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import HomeScreen from './home/home';
 import Search from './search/search';
 import Map from './map/map';
@@ -30,21 +32,47 @@ import Information from './information/information';
 import User from './user/user';
 
 import SignUp from './signUp';
-import SigninContainer from '../container/SigninContainer';
+import SignIn from './signIn';
 
 import useIsLoggedin from '../hooks/useIsLoggedin';
+
+import signIn from './signIn';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function Index() {
-  const {isLoggedin} = useIsLoggedin();
+function Index(props) {
+  const isLoggedin = useIsLoggedin();
+  console.log('isLoggedin : ', isLoggedin);
   // return isLoggedin ? <View>true</View> : <View>false</View>;
-
+  console.log('props :', props);
   return (
     <NavigationContainer>
       {isLoggedin ? (
-        <Tab.Navigator>
+        <Tab.Navigator
+          screenOptions={({route}) => ({
+            tabBarLabel: '',
+            tabBarIcon: ({focused, size}) => {
+              let iconName;
+
+              if (route.name === 'Home') {
+                iconName = focused ? 'home' : 'home-outline';
+              } else if (route.name === 'Search') {
+                iconName = focused ? 'search' : 'search-outline';
+              } else if (route.name === 'Map') {
+                iconName = focused ? 'map' : 'map-outline';
+              } else if (route.name === 'Information') {
+                iconName = focused
+                  ? 'information-circle'
+                  : 'information-circle-outline';
+              } else if (route.name === 'User') {
+                iconName = focused ? 'person' : 'person-outline';
+              }
+
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} />;
+            },
+          })}>
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Search" component={Search} />
           <Tab.Screen name="Map" component={Map} />
@@ -53,8 +81,12 @@ function Index() {
         </Tab.Navigator>
       ) : (
         // <Stack.Screen name="SignIn" component={SignIn} />
-        <Tab.Navigator>
-          <Tab.Screen name="signin" component={SigninContainer} />
+        <Tab.Navigator
+          screenOptions={({route}) => ({
+            tabBarVisible: false,
+          })}>
+          <Tab.Screen name="signin" component={SignIn} />
+          <Tab.Screen name="signup" component={SignUp} />
         </Tab.Navigator>
       )}
     </NavigationContainer>

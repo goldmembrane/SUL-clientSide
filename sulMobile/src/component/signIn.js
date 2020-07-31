@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {TextInput, TouchableOpacity, Alert} from 'react-native';
 import {fetchSignIn} from './helper/fetchApi';
+import useConfirmLogin from '../hooks/useConfirmLogin';
 
 const styles = StyleSheet.create({
   header: {flex: 1},
@@ -76,17 +77,15 @@ const styles = StyleSheet.create({
   },
 });
 
-function signIn({onSignin}) {
+function signIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validata, setValidata] = useState(false);
   const [errmsg, setErrmsg] = useState('');
   const [passmsg, setPassmsg] = useState('');
-  // let errText = null;
+  // Custom hook
+  const onConfirmLogin = useConfirmLogin();
 
-  const handleSignin = () => {
-    onSignin(true);
-  };
   function toFetchSignIn(email, password) {
     if (!chkEmail(email) || !chkPassword(password)) {
       return;
@@ -101,7 +100,7 @@ function signIn({onSignin}) {
             // [{text: '확인', onPress: () => navigation.navigate('Home')}],
             {cancelable: false},
           );
-          handleSignin();
+          onConfirmLogin(true);
           // props.navigtion.navigate('Home')
         } else {
           Alert.alert('입력정보가 올바르지 않습니다');
