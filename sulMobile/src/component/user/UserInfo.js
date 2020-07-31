@@ -15,6 +15,8 @@ import SULteamTitle from '../header/SULteamTitle';
 import {fetchUserInfoGet} from '../helper/fetchApi';
 import PicProfile from './PicProfile';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SignOut from './SignOut';
+import {putUserInfo} from '../helper/fetchApi';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 const styles = StyleSheet.create({
@@ -24,8 +26,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     backgroundColor: 'white',
   },
+  username: {
+    flex: 0.5,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 24,
+  },
   infoBox: {
-    flex: 4,
+    flex: 2,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -120,7 +129,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function UserInfo() {
+export default function UserInfo(props) {
   const [isLogin, setIsLogin] = useState(false);
   const [userInfo, setUserInfo] = useState({id: '', username: '', email: ''});
   //수정전 임시 저장
@@ -137,7 +146,6 @@ export default function UserInfo() {
         if (data.status === 200) {
           setIsLogin(true);
           setUserInfo(data.data);
-          Alert.alert('로그인되었습니다');
           // console.log(userInfo, 'data');
           // Alert.alert(
           //   '로그인 하였습니다.',
@@ -172,7 +180,26 @@ export default function UserInfo() {
     setUserPicUrl(url);
     console.log(userPicUrl, 'pic url');
   };
-
+  function toPutUserInfo() {
+    putUserInfo(userName)
+      .then((data) => {
+        if (data.data.message == 'Success') {
+          Alert.alert('Success.');
+          setUserInfo({...userInfo, username: userName});
+        }
+      })
+      .catch((e) => {
+        if (e.response.status === 401) {
+          Alert.alert('need user session.');
+        } else {
+          Alert.alert('Update Errorr', '', {cancelable: false});
+        }
+      });
+  }
+  function cancleInfo() {
+    setUserPicUrl('');
+    setUserName('');
+  }
   return (
     <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
       {isLogin ? (
@@ -182,6 +209,27 @@ export default function UserInfo() {
             {/* <View style={styles.titleBox}>
             <Text style={styles.title}>SUL team</Text>
           </View> */}
+          </View>
+          <View style={styles.username}>
+            {isEdName ? (
+              <TextInput
+                style={styles.inputBox}
+                underlineColorAndroid="rgba(0,0,0,0)"
+                placeholder="username"
+                placeholderTextColor="'rgba(255, 255,255,0.5)',"
+                autoCapitalize="none"
+                //"#ffffff"
+                defaultValue={userInfo.username}
+                selectionColor="black"
+                onChangeText={(text) => {
+                  setUserName(text);
+                }}
+              />
+            ) : (
+              <Text style={{color: 'black', fontSize: 20}}>
+                {userInfo.username}
+              </Text>
+            )}
           </View>
           <View style={styles.infoBox}>
             <View style={styles.profilePicBox}>
@@ -205,30 +253,13 @@ export default function UserInfo() {
                 ) : (
                   <></>
                 )}
-                {isEdName ? (
-                  <TextInput
-                    style={styles.inputBox}
-                    underlineColorAndroid="rgba(0,0,0,0)"
-                    placeholder="username"
-                    placeholderTextColor="'rgba(255, 255,255,0.5)',"
-                    autoCapitalize="none"
-                    //"#ffffff"
-                    defaultValue={userInfo.username}
-                    selectionColor="black"
-                    onChangeText={(text) => {
-                      setUserName(text);
-                    }}
-                  />
-                ) : (
-                  <Text style={{color: 'black', fontSize: 16}}>
-                    {userInfo.username}님
-                  </Text>
-                )}
+
                 {/* <Text style={{color: 'black'}}>{userInfo.username}님</Text> */}
               </View>
             </View>
             <View style={styles.profileInfoBox}>
-              <Text style={styles.profileInfoBox__logout}>Logout</Text>
+              <SignOut {...props} />
+              {/* <Text style={styles.profileInfoBox__logout}>Logout</Text> */}
               <Text style={styles.profileInfoBox__text}>{userInfo.email}</Text>
               {isEdit ? (
                 <View style={styles.profileInfoBox__okcanclebox}>
@@ -237,6 +268,7 @@ export default function UserInfo() {
                     onPress={() => {
                       setIsEdit(false);
                       setIsEdName(false);
+                      toPutUserInfo();
                     }}>
                     수정완료
                   </Text>
@@ -245,6 +277,7 @@ export default function UserInfo() {
                     onPress={() => {
                       setIsEdit(false);
                       setIsEdName(false);
+                      cancleInfo();
                     }}>
                     취소
                   </Text>
@@ -263,10 +296,10 @@ export default function UserInfo() {
 
             {/* </View> */}
           </View>
+          <View>
+            <Text style={styles.history__maintitle}>History</Text>
+          </View>
           <View style={styles.history}>
-            <View>
-              <Text style={styles.history__maintitle}>History</Text>
-            </View>
             <View style={styles.history__contentbox}>
               <View style={{paddingLeft: 20, width: '85%'}}>
                 <Text style={styles.history__content__title}>

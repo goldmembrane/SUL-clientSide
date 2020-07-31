@@ -122,7 +122,7 @@ function signUp({navigation}) {
             [
               // {text: 'Ask me later', onPress: () => console.warn('Ask me later pressed')},
               // {text: 'NO', onPress: () => console.warn('NO Pressed'), style: 'cancel'},
-              {text: '확인', onPress: () => navigation.navigate('Home')},
+              // {text: '확인', onPress: () => navigation.navigate('Home')},
             ],
             {cancelable: false},
           );
@@ -276,7 +276,7 @@ function signUp({navigation}) {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.loginButton}
-                onPress={() => navigation.navigate('SignIn')}>
+                onPress={() => navigation.navigate('signin')}>
                 <Text style={styles.buttonText}>로그인</Text>
               </TouchableOpacity>
             </View>

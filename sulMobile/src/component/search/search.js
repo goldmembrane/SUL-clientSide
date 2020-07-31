@@ -7,8 +7,9 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {TextInput, TouchableOpacity} from 'react-native';
-import fakeData from './fakeData';
+// import fakeData from './fakeData';
 import SearchList from './SearchList';
+import SearchFetchJudicial from './searchFetchJudicial';
 
 const styles = StyleSheet.create({
   all: {flex: 1, backgroundColor: 'white'},
@@ -126,13 +127,13 @@ function Search() {
   _onPressEmptySpace = () => {
     Keyboard.dismiss();
   };
-  const searchHandler = () => {
-    if (searchText.length > 0) {
-      setLawData(fakeData);
-    } else {
-      setLawData([]);
-    }
-  };
+  // const searchHandler = () => {
+  //   if (searchText.length > 0) {
+  //     setLawData(fakeData);
+  //   } else {
+  //     setLawData([]);
+  //   }
+  // };
   return (
     <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
       <View style={styles.all}>
@@ -140,7 +141,12 @@ function Search() {
           <View style={styles.titleBox}>
             <Text style={styles.title}>SUL team</Text>
           </View>
-          <View style={styles.inputBox}>
+          <SearchFetchJudicial
+            setSearchText={setSearchText}
+            setLawData={setLawData}
+            searchText={searchText}
+          />
+          {/* <View style={styles.inputBox}>
             <TextInput
               style={styles.textInputBox}
               autoFocus={true}
@@ -157,7 +163,7 @@ function Search() {
                 // console.log(lawData, 'lawdata');
               }}
             />
-          </View>
+          </View> */}
           <View style={styles.tabbar}>
             <View style={[styles.tab__title__box, styles[clickedClassName[0]]]}>
               <Text onPress={() => selectOne(0)} style={styles.tabtitle}>

@@ -29,14 +29,12 @@ import HomeScreen from './home/home';
 import Search from './search/search';
 import Map from './map/map';
 import Information from './information/information';
-import User from './user/user';
+import UserInfo from './user/UserInfo';
 
 import SignUp from './signUp';
 import SignIn from './signIn';
 
 import useIsLoggedin from '../hooks/useIsLoggedin';
-
-import signIn from './signIn';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -65,7 +63,7 @@ function Index(props) {
                 iconName = focused
                   ? 'information-circle'
                   : 'information-circle-outline';
-              } else if (route.name === 'User') {
+              } else if (route.name === 'UserInfo') {
                 iconName = focused ? 'person' : 'person-outline';
               }
 
@@ -77,7 +75,7 @@ function Index(props) {
           <Tab.Screen name="Search" component={Search} />
           <Tab.Screen name="Map" component={Map} />
           <Tab.Screen name="Information" component={Information} />
-          <Tab.Screen name="User" component={User} />
+          <Tab.Screen name="UserInfo" component={UserInfo} />
         </Tab.Navigator>
       ) : (
         // <Stack.Screen name="SignIn" component={SignIn} />
