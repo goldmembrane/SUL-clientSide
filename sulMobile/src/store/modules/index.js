@@ -1,9 +1,13 @@
 import {combineReducers} from 'redux';
 import counter from './counter';
+import sentencing from './sentencing';
+import loding from './loding';
 
 // 루트 리듀서
 export default combineReducers({
   counter,
+  sentencing,
+  loding,
   // 다른 리듀서를 만들면 여기에 넣어서 합쳐줌,
 });
 

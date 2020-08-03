@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, TextInput, Text, Alert} from 'react-native';
 import {fetchJudicial} from '../helper/fetchApi';
 import {fetchJudicialGet} from '../helper/fetchApi';
+import fakeData from './fakeDataSearch/fakeData';
 
 const styles = StyleSheet.create({
   inputBox: {
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
 });
-
+//검색창 구현
 function SearchFetchJudicial(props) {
   //   function searchHandler() {
   //     if (props.searchText.length > 0) {
@@ -32,32 +33,38 @@ function SearchFetchJudicial(props) {
   //       props.setLawData([]);
   //     }
   //   }
-  function fetchGetSearch() {
-    return fetchJudicialGet('폭력')
-      .then((data) => {
-        console.log(data.data, 'get data');
-        return;
-      })
-      .catch((e) => {
-        Alert.alert(
-          'error',
-          '',
-          //   [{text: '확인', onPress: () => navigation.navigate('Home')}],
-          {cancelable: false},
-        );
-        return;
-      });
-  }
+  //put 요청 보내기 --> 서버에서 통합됨
+  // function fetchGetSearch() {
+  //   return fetchJudicialGet(searchText)
+  //     .then((data) => {
+  //       console.log(data.data, 'get data');
+  //       return;
+  //     })
+  //     .catch((e) => {
+  //       Alert.alert(
+  //         'error',
+  //         '',
+  //         //   [{text: '확인', onPress: () => navigation.navigate('Home')}],
+  //         {cancelable: false},
+  //       );
+  //       return;
+  //     });
+  // }
   function searchHandler() {
-    if (props.searchText.length < 0) {
+    if (props.searchText.length < 1) {
+      props.setLawData([]);
       return;
     }
-    fetchJudicial('폭력')
+    props.setIsDetail(false);
+    fetchJudicial(props.searchText)
       .then((data) => {
+        // props.setLawData(fakeData);
+        props.setLawData(data.data);
         return console.log(data.data, 'search data');
       })
-      .then(() => fetchGetSearch())
+      // .then(() => fetchGetSearch())
       .catch((e) => {
+        console.log(e);
         Alert.alert(
           'error',
           '',

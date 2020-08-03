@@ -1,24 +1,32 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   StyleSheet,
   View,
   Text,
   Keyboard,
   TouchableWithoutFeedback,
+  ScrollView,
 } from 'react-native';
 import {TextInput, TouchableOpacity} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 // import fakeData from './fakeData';
 import SearchList from './SearchList';
 import SearchFetchJudicial from './searchFetchJudicial';
+import Detail from './detail';
+import {senTenCing} from '../../store/modules/sentencing';
+// import {isLoding} from '../../store/modules/loding';
+import LodingAnimation from '../helper/lodingAnimation';
+import {SearchListBox} from './SearchListBox';
 
 const styles = StyleSheet.create({
   all: {flex: 1, backgroundColor: 'white'},
   header: {marginTop: 70, justifyContent: 'flex-end', backgroundColor: 'white'},
   body: {
     flex: 6,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     backgroundColor: 'white',
-    width: '100%',
+    // width: '100%',
   },
   title: {
     fontSize: 24,
@@ -60,6 +68,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 10,
   },
+  tab__detail__title__box1: {
+    flex: 1,
+    paddingVertical: 10,
+  },
+  tab__detail__title__box2: {
+    flex: 6,
+    paddingVertical: 10,
+  },
   tabtitle: {
     textAlign: 'center',
     color: 'black',
@@ -79,10 +95,10 @@ const styles = StyleSheet.create({
   },
   main: {
     flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 50,
+    // width: '100%',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // paddingBottom: 20,
   },
   mainText: {
     textAlign: 'center',
@@ -107,12 +123,25 @@ const styles = StyleSheet.create({
 });
 
 function Search() {
+  //redux data
+  const dispatch = useDispatch();
+  let sentencingData = useSelector((state) => state.sentencing.sentencing);
+  let isLodingNow = useSelector((state) => state.loding.isLoding);
+  useEffect(() => {
+    dispatch(senTenCing({title: 'hi', day: '11', data: [], num: '0'}));
+    console.log(sentencingData, '??????');
+  }, []);
+
+  //상태: 검색리스트 false, 디테일 true
+  const [isDetail, setIsDetail] = useState(false);
+  //서치 text 내용
   const [searchText, setSearchText] = useState(['']);
   const [clickedClassName, setClickedClassName] = useState([
     'click',
     'notClick',
     'notClick',
   ]);
+  //검색결과 리스트
   const [lawData, setLawData] = useState([]);
   function selectOne(num) {
     if (num < 0 || num > 2) return;
@@ -134,19 +163,63 @@ function Search() {
   //     setLawData([]);
   //   }
   // };
-  return (
-    <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
-      <View style={styles.all}>
-        <View style={styles.header}>
-          <View style={styles.titleBox}>
-            <Text style={styles.title}>SUL team</Text>
+  //SPA (Single Page Application)
+  let mainScreen;
+  if (lawData && lawData.length > 0) {
+    if (isDetail && sentencingData.title !== 'hi') {
+      // 판결 세부내용 페이지 //디테일이 트루일경우
+      mainScreen = <Detail />;
+    } else {
+      //판결 리스트 페이지
+      mainScreen = (
+        <View style={{flex: 1}}>
+          <View style={{flex: 6}}>
+            <SearchList laws={lawData} setIsDetail={setIsDetail} />
           </View>
-          <SearchFetchJudicial
-            setSearchText={setSearchText}
-            setLawData={setLawData}
-            searchText={searchText}
-          />
-          {/* <View style={styles.inputBox}>
+          {/* {lawData.map(law =>(<SearchList law={law} etIsDetail={setIsDetail} />))} */}
+
+          {/* <View style={styles.analysis__button}> */}
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <TouchableOpacity style={styles.analysis__button}>
+              <Text style={styles.analysis__button__text}>분석하기</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    }
+  } else {
+    mainScreen = (
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <Text style={styles.mainText}>키워드를 입력해 주세요</Text>
+      </View>
+    );
+  }
+  return (
+    // <ScrollView contentContainerStyle={{flexGrow: 1}}>
+    // <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
+    <View style={styles.all}>
+      {isLodingNow ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <LodingAnimation />
+        </View>
+      ) : (
+        <>
+          <View style={styles.header}>
+            <View style={styles.titleBox}>
+              <Text style={styles.title}>SUL team</Text>
+            </View>
+            <SearchFetchJudicial
+              setSearchText={setSearchText}
+              setLawData={setLawData}
+              searchText={searchText}
+              setIsDetail={setIsDetail}
+            />
+            {/* <View style={styles.inputBox}>
             <TextInput
               style={styles.textInputBox}
               autoFocus={true}
@@ -164,43 +237,62 @@ function Search() {
               }}
             />
           </View> */}
-          <View style={styles.tabbar}>
-            <View style={[styles.tab__title__box, styles[clickedClassName[0]]]}>
-              <Text onPress={() => selectOne(0)} style={styles.tabtitle}>
-                전체
-              </Text>
-            </View>
-            <View style={[styles.tab__title__box, styles[clickedClassName[1]]]}>
-              <Text onPress={() => selectOne(1)} style={styles.tabtitle}>
-                승인
-              </Text>
-            </View>
-            <View style={[styles.tab__title__box, styles[clickedClassName[2]]]}>
-              <Text onPress={() => selectOne(2)} style={styles.tabtitle}>
-                기각
-              </Text>
-            </View>
-          </View>
-        </View>
 
-        <View style={styles.body}>
-          <View style={styles.main}>
-            {lawData?.length ? (
-              <>
-                <SearchList laws={lawData} />
-                {/* <View style={styles.analysis__button}> */}
-                <TouchableOpacity style={styles.analysis__button}>
-                  <Text style={styles.analysis__button__text}>분석하기</Text>
-                </TouchableOpacity>
-                {/* </View> */}
-              </>
+            {/* <------메뉴바 보여주는 컴포넌트 리스트를 클릭하면 이동 */}
+            {isDetail ? (
+              // 높이 40 균등분배
+              <View style={styles.tabbar}>
+                <View style={[styles.tab__detail__title__box1]}>
+                  <Ionicons
+                    name="arrow-back-circle-outline"
+                    size={22}
+                    color="black"
+                    onPress={() => setIsDetail(false)}
+                    style={{paddingLeft: 10}}
+                  />
+                  {/* <Text onPress={() => setIsDetail(false)} style={styles.tabtitle}>
+                뒤로
+              </Text> */}
+                </View>
+                <View style={[styles.tab__detail__title__box2]}>
+                  <Text style={styles.tabtitle}>판결 내용</Text>
+                </View>
+              </View>
             ) : (
-              <Text style={styles.mainText}>키워드를 입력해 주세요</Text>
+              <View style={styles.tabbar}>
+                <View
+                  style={[styles.tab__title__box, styles[clickedClassName[0]]]}>
+                  <Text onPress={() => selectOne(0)} style={styles.tabtitle}>
+                    전체
+                  </Text>
+                </View>
+                <View
+                  style={[styles.tab__title__box, styles[clickedClassName[1]]]}>
+                  <Text onPress={() => selectOne(1)} style={styles.tabtitle}>
+                    승인
+                  </Text>
+                </View>
+                <View
+                  style={[styles.tab__title__box, styles[clickedClassName[2]]]}>
+                  <Text onPress={() => selectOne(2)} style={styles.tabtitle}>
+                    기각
+                  </Text>
+                </View>
+              </View>
             )}
           </View>
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
+
+          <View style={styles.body}>
+            <View style={styles.main}>
+              {/* <---- 데이터가 있으면 리스트를 보여붐 */}
+              {mainScreen}
+            </View>
+          </View>
+        </>
+      )}
+    </View>
+    //   {/* </TouchableWithoutFeedback> */}
+    // {/* </ScrollView> */}
   );
 }
 
