@@ -36,31 +36,34 @@ export function postSignOut() {
   return axios.post(baseUrl + '/users/signOut', {});
 }
 
-export function fetchJudicial(keywords) {
-  console.log('start');
+export function fetchJudicial(keyword) {
+  console.log('fetchJudicial start');
   //키워드로 검색
   const obj = {
-    keywords,
+    keyword,
   };
   return axios.post(baseUrl + '/search/post', obj);
 }
-export function fetchJudicialGet(keywords) {
-  //키워드로 검색
-  return axios.get(baseUrl + '/search/get', {
-    params: {
-      keyword: keywords,
-    },
-  });
-}
+// export function fetchJudicialGet(keyword) {
+//   //키워드로 검색
+//   return axios.get(baseUrl + '/search/get', {
+//     params: {
+//       keyword: keyword,
+//     },
+//   });
+// }
 
 export function lawgo(keywords) {
   //키워드로 검색
+  const number = Number(keywords);
   return axios.get(
-    'http://www.law.go.kr/LSW/precInfoP.do?precSeq=77690&mode=0',
-    {
-      // params: {
-      //   keyword: keywords,
-      // },
-    },
+    // 'http://www.law.go.kr/LSW/precInfoP.do?precSeq=77690&mode=0',
+    `http://www.law.go.kr/LSW/precInfoP.do?precSeq=${number}&mode=0`,
+    // 'http://sw.hanyang.ac.kr/board/notice.php?ptype=&page=1&code=notice',
+    // {
+    //   params: {
+    //     keyword: keywords,
+    //   },
+    // },
   );
 }

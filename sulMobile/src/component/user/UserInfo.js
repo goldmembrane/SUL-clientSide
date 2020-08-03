@@ -18,6 +18,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import SignOut from './SignOut';
 import {putUserInfo} from '../helper/fetchApi';
 import {lawgo} from '../helper/fetchApi';
+import ParserLaw from './ParserLaw';
+import useConfirmLogin from '../../hooks/useConfirmLogin';
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 const styles = StyleSheet.create({
   all: {flex: 1, backgroundColor: 'white'},
@@ -173,9 +175,13 @@ export default function UserInfo(props) {
       });
   }, []);
   function aa() {
-    lawgo.then((data) => {
-      console.log(data.data);
-    });
+    lawgo('ㅁㅁ')
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch((e) => {
+        console.log(e, 'err');
+      });
   }
   _onPressEmptySpace = () => {
     Keyboard.dismiss();
@@ -203,6 +209,11 @@ export default function UserInfo(props) {
   function cancleInfo() {
     setUserPicUrl('');
     setUserName('');
+  }
+  const onConfirmLogin = useConfirmLogin();
+  function toLogin() {
+    onConfirmLogin(false);
+    props.navigation.navigate('signin');
   }
   return (
     <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
@@ -334,6 +345,10 @@ export default function UserInfo(props) {
                 <Text style={styles.history__content__Percentage}>25%</Text>
               </View>
             </View>
+            <View>
+              <ParserLaw />
+              <Text onPress={aa}>ㅁㅁㅁㅁ</Text>
+            </View>
           </View>
         </View>
       ) : (
@@ -344,7 +359,7 @@ export default function UserInfo(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text>로그인이 필요합니다!</Text>
+          <Text onPress={toLogin}>로그인이 필요합니다!</Text>
         </View>
       )}
     </TouchableWithoutFeedback>
