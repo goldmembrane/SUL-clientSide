@@ -53,6 +53,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 7,
   },
+  list__contentbox: {
+    marginVertical: 5,
+    paddingHorizontal: 10,
+    marginHorizontal: 5,
+    backgroundColor: '#C4C4C4',
+  },
   history__content__title: {
     marginBottom: 5,
     fontSize: 18,
@@ -112,10 +118,11 @@ export const SearchListBox = (props) => {
   };
 
   return (
-    <View
-      style={{paddingVertical: 5, paddingHorizontal: 10, marginHorizontal: 5}}>
+    <View style={styles.list__contentbox}>
       <Text style={styles.title} onPress={() => goDetail(props.law)}>
         {props.law}
+        {/* {props.law.title.slice(0, 28)}
+        {props.law.subtitle.slice(5, 45)} */}
       </Text>
     </View>
     /* <View>
