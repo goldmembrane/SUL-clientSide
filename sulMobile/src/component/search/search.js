@@ -11,6 +11,8 @@ import {senTenCing} from '../../store/modules/sentencing';
 import LodingAnimation from '../helper/lodingAnimation';
 import Analysis from './Analysis';
 import AnalysisButton from './AnalysisButton';
+import DisDetail from './dismissAccept/disDetail';
+import AccDetail from './dismissAccept/accDetail';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 const styles = StyleSheet.create({
@@ -157,7 +159,7 @@ function Search() {
       mainScreen = (
         <Analysis setIsAnalysis={setIsAnalysis} searchKeyword={searchKeyword} />
       );
-    } else {
+    } else if (clickedClassName[0] == 'click') {
       //판결 리스트 페이지
       mainScreen = (
         <View style={{flex: 1}}>
@@ -169,16 +171,25 @@ function Search() {
               }}>
               <Text
                 style={{
-                  flex: 5,
+                  flex: 2,
                   fontSize: 20,
-                  textAlign: 'center',
+                  textAlign: 'left',
                   fontWeight: '700',
-                  paddingLeft: WIDTH / 10,
+                  paddingHorizontal: 16,
+                  overflow: 'hidden',
+                  // paddingLeft: WIDTH / 10,
                 }}>
                 검색어 : {searchKeyword}
               </Text>
-              <Text style={{flex: 1, textAlign: 'right'}}>
-                {lawData.length}건
+              <Text
+                style={{
+                  flex: 1,
+                  fontSize: 20,
+                  color: 'blue',
+                  textAlign: 'right',
+                  paddingHorizontal: 16,
+                }}>
+                총 : {lawData.length}건
               </Text>
             </View>
             <SearchList laws={lawData} setIsDetail={setIsDetail} />
@@ -199,6 +210,11 @@ function Search() {
           </View>
         </View>
       );
+      //두번째 탭인 승인과 세번째 탭인 기각 보여주기
+    } else if (clickedClassName[1] == 'click') {
+      mainScreen = <AccDetail setIsDetail={setIsDetail} />;
+    } else if (clickedClassName[2] == 'click') {
+      mainScreen = <DisDetail setIsDetail={setIsDetail} />;
     }
   } else {
     mainScreen = (
@@ -228,6 +244,7 @@ function Search() {
               setIsDetail={setIsDetail}
               setIsAnalysis={setIsAnalysis}
               setSearchKeyword={setSearchKeyword}
+              setClickedClassName={setClickedClassName}
             />
             {/* <View style={styles.inputBox}>
             <TextInput

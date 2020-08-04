@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+// import React, {useState, useEffect} from 'react';
 import {lawgo} from '../helper/fetchApi';
 const cheerio = require('react-native-cheerio');
-import fake from './fakeDataSearch/content';
+// import fake from './fakeDataSearch/content';
 // const onlyTypeTag = ({type}) => type == 'tag';
 
 //로 홈페이지에서 세부 판결 내용을 가져옴

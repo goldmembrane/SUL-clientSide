@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
+import {useSelector} from 'react-redux';
 import {StyleSheet, View, Text} from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
-import fakeDataProbability from './fakeDataSearch/fakeDataProbability';
+// import fakeDataProbability from './fakeDataSearch/fakeDataProbability';
 
 const styles = StyleSheet.create({
   all: {flex: 1, backgroundColor: 'white'},
@@ -107,7 +108,14 @@ const styles = StyleSheet.create({
 const left = '<';
 
 function Analysis({setIsAnalysis, searchKeyword}) {
-  const [dismissData, setDismissData] = useState(fakeDataProbability);
+  let disMissData = useSelector((state) => state.dismissModule.dismiss);
+  let accData = useSelector((state) => state.accModule.acc);
+
+  // const [dismissData, setDismissData] = useState(fakeDataProbability);
+  const [dismissData, setDismissData] = useState({
+    total: disMissData.length + accData.length,
+    dismiss: disMissData.length,
+  });
   const [tmpDismiss, setTmpDismiss] = useState(0);
   const [percentage, setPercentage] = useState(0.0);
 
@@ -190,7 +198,7 @@ function Analysis({setIsAnalysis, searchKeyword}) {
           </ProgressCircle>
         </View>
         <View style={styles.main}>
-          <Text style={styles.mainText}>{searchKeyword}</Text>
+          <Text style={styles.mainText}>검색어 : {searchKeyword}</Text>
         </View>
       </View>
     </View>
