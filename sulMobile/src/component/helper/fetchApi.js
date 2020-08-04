@@ -2,7 +2,9 @@ import axios from 'axios';
 
 // const baseUrl = 'http://localhost:3001';
 const baseUrl = 'http://54.180.94.68:3001';
-
+const instance = axios.create({
+  timeout: 1000,
+});
 export function fetchSignIn(email, password) {
   console.log('signin fetch start');
   const userInfo = {
@@ -44,6 +46,15 @@ export function fetchJudicial(keyword) {
   };
   return axios.post(baseUrl + '/search/post', obj);
 }
+
+export function fetchJudicialGet(keyword) {
+  console.log('fetchJudicialGet start');
+  return axios.get(baseUrl + '/search/get', {
+    params: {
+      keyword: keyword,
+    },
+  });
+}
 // export function fetchJudicialGet(keyword) {
 //   //키워드로 검색
 //   return axios.get(baseUrl + '/search/get', {
@@ -56,8 +67,10 @@ export function fetchJudicial(keyword) {
 export function lawgo(keywords) {
   //키워드로 검색
   const number = Number(keywords);
+  console.log(number, 'number~~~~~~~~');
   return axios.get(
     // 'http://www.law.go.kr/LSW/precInfoP.do?precSeq=77690&mode=0',
+    // keywords,
     `http://www.law.go.kr/LSW/precInfoP.do?precSeq=${number}&mode=0`,
     // 'http://sw.hanyang.ac.kr/board/notice.php?ptype=&page=1&code=notice',
     // {
@@ -66,4 +79,7 @@ export function lawgo(keywords) {
     //   },
     // },
   );
+}
+export function fetchKeqyWords() {
+  return axios.get(baseUrl + '/keyword/get');
 }

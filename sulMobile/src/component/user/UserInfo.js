@@ -17,9 +17,12 @@ import PicProfile from './PicProfile';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SignOut from './SignOut';
 import {putUserInfo} from '../helper/fetchApi';
+import {fetchKeyGet} from '../helper/fetchKeyWord';
 import {lawgo} from '../helper/fetchApi';
-import ParserLaw from './ParserLaw';
+// import ParserLaw from './ParserLaw';
 import useConfirmLogin from '../../hooks/useConfirmLogin';
+import HistoryList from './historyList';
+
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 const styles = StyleSheet.create({
   all: {flex: 1, backgroundColor: 'white'},
@@ -141,6 +144,8 @@ export default function UserInfo(props) {
   const [isEdName, setIsEdName] = useState(false);
   //전체 유저 에디팅 상태인지
   const [isEdit, setIsEdit] = useState(false);
+  //유저 검색 히스토리 배열
+  const [historyData, setHistoryData] = useState([]);
 
   useEffect(() => {
     fetchUserInfoGet()
@@ -155,6 +160,14 @@ export default function UserInfo(props) {
           //   [{text: '확인', onPress: () => navigation.navigate('Home')}],
           //   {cancelable: false},
           // );
+          //
+          //History data get Start!!!
+          fetchKeyGet().then((keyData) => {
+            console.log(keyData.data, 'keyData!!');
+            if (keyData.data.length > 0) {
+              setHistoryData(keyData.data);
+            }
+          });
         } else {
           Alert.alert('입력정보가 올바르지 않습니다');
         }
@@ -173,6 +186,13 @@ export default function UserInfo(props) {
           // );
         }
       });
+    // fetchKeqyWords()
+    //   .then((data) => {
+    //     console.log(data.data, 'fetchKeyWords');
+    //   })
+    //   .catch((e) => {
+    //     console.log(e, 'fetchKeyWords');
+    //   });
   }, []);
   function aa() {
     lawgo('ㅁㅁ')
@@ -315,40 +335,7 @@ export default function UserInfo(props) {
             <Text style={styles.history__maintitle}>History</Text>
           </View>
           <View style={styles.history}>
-            <View style={styles.history__contentbox}>
-              <View style={{paddingLeft: 20, width: '85%'}}>
-                <Text style={styles.history__content__title}>
-                  대법원 1980. 5. 20. 선고 80도306 전원합의체 판결 ★
-                  [(가)내란목적살인,(나)내란수괴
-                </Text>
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={{marginRight: 10}}>폭력으로 다리 피해</Text>
-                  <Text style={styles.history__content__day}>20.07.26</Text>
-                </View>
-              </View>
-              <View style={{paddingRight: 20}}>
-                <Text style={styles.history__content__Percentage}>25%</Text>
-              </View>
-            </View>
-            <View style={styles.history__contentbox}>
-              <View style={{paddingLeft: 20, width: '85%'}}>
-                <Text style={styles.history__content__title}>
-                  서울중앙지방법원 2016. 7. 4. 선고 2016고합12 판결
-                  [특수공무집행방해치상ㆍ특수공무집행
-                </Text>
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={{marginRight: 10}}>폭력으로 다리 피해</Text>
-                  <Text style={styles.history__content__day}>20.07.26</Text>
-                </View>
-              </View>
-              <View style={{paddingRight: 20}}>
-                <Text style={styles.history__content__Percentage}>25%</Text>
-              </View>
-            </View>
-            <View>
-              <ParserLaw />
-              <Text onPress={aa}>ㅁㅁㅁㅁ</Text>
-            </View>
+            <HistoryList historyData={historyData} />
           </View>
         </View>
       ) : (

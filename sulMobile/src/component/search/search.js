@@ -1,14 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Keyboard,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from 'react-native';
-import {TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, Dimensions} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import fakeData from './fakeData';
 import SearchList from './SearchList';
@@ -17,8 +9,10 @@ import Detail from './detail';
 import {senTenCing} from '../../store/modules/sentencing';
 // import {isLoding} from '../../store/modules/loding';
 import LodingAnimation from '../helper/lodingAnimation';
-import {SearchListBox} from './SearchListBox';
+import Analysis from './Analysis';
+import AnalysisButton from './AnalysisButton';
 
+const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 const styles = StyleSheet.create({
   all: {flex: 1, backgroundColor: 'white'},
   header: {marginTop: 70, justifyContent: 'flex-end', backgroundColor: 'white'},
@@ -105,21 +99,6 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 24,
   },
-  analysis__button: {
-    width: '70%',
-    height: 50,
-    borderRadius: 25,
-    position: 'absolute',
-    bottom: 30,
-    backgroundColor: '#82A3D6',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  analysis__button__text: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 24,
-  },
 });
 
 function Search() {
@@ -136,6 +115,9 @@ function Search() {
   const [isDetail, setIsDetail] = useState(false);
   //서치 text 내용
   const [searchText, setSearchText] = useState(['']);
+  //검색어 출력
+  const [searchKeyword, setSearchKeyword] = useState('');
+  //검색 결과
   const [clickedClassName, setClickedClassName] = useState([
     'click',
     'notClick',
@@ -143,6 +125,10 @@ function Search() {
   ]);
   //검색결과 리스트
   const [lawData, setLawData] = useState([]);
+  //분석하기 상태인가
+  const [isAnalysis, setIsAnalysis] = useState(false);
+  //기각 건수 토탈은 100을 기준으로 함
+  const [dimiss, setDismiss] = useState(0);
   function selectOne(num) {
     if (num < 0 || num > 2) return;
     if (num === 0) {
@@ -153,9 +139,6 @@ function Search() {
       setClickedClassName(['notClick', 'notClick', 'click']);
     }
   }
-  _onPressEmptySpace = () => {
-    Keyboard.dismiss();
-  };
   // const searchHandler = () => {
   //   if (searchText.length > 0) {
   //     setLawData(fakeData);
@@ -164,16 +147,40 @@ function Search() {
   //   }
   // };
   //SPA (Single Page Application)
+  //하단 메인 페이지
   let mainScreen;
   if (lawData && lawData.length > 0) {
     if (isDetail && sentencingData.title !== 'hi') {
       // 판결 세부내용 페이지 //디테일이 트루일경우
       mainScreen = <Detail />;
+    } else if (isAnalysis) {
+      mainScreen = (
+        <Analysis setIsAnalysis={setIsAnalysis} searchKeyword={searchKeyword} />
+      );
     } else {
       //판결 리스트 페이지
       mainScreen = (
         <View style={{flex: 1}}>
           <View style={{flex: 6}}>
+            <View
+              style={{
+                paddingVertical: 10,
+                flexDirection: 'row',
+              }}>
+              <Text
+                style={{
+                  flex: 5,
+                  fontSize: 20,
+                  textAlign: 'center',
+                  fontWeight: '700',
+                  paddingLeft: WIDTH / 10,
+                }}>
+                검색어 : {searchKeyword}
+              </Text>
+              <Text style={{flex: 1, textAlign: 'right'}}>
+                {lawData.length}건
+              </Text>
+            </View>
             <SearchList laws={lawData} setIsDetail={setIsDetail} />
           </View>
           {/* {lawData.map(law =>(<SearchList law={law} etIsDetail={setIsDetail} />))} */}
@@ -185,9 +192,10 @@ function Search() {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <TouchableOpacity style={styles.analysis__button}>
-              <Text style={styles.analysis__button__text}>분석하기</Text>
-            </TouchableOpacity>
+            <AnalysisButton
+              setIsAnalysis={setIsAnalysis}
+              setIsDetail={setIsDetail}
+            />
           </View>
         </View>
       );
@@ -218,6 +226,8 @@ function Search() {
               setLawData={setLawData}
               searchText={searchText}
               setIsDetail={setIsDetail}
+              setIsAnalysis={setIsAnalysis}
+              setSearchKeyword={setSearchKeyword}
             />
             {/* <View style={styles.inputBox}>
             <TextInput
@@ -258,7 +268,9 @@ function Search() {
                   <Text style={styles.tabtitle}>판결 내용</Text>
                 </View>
               </View>
-            ) : (
+            ) : isAnalysis ? (
+              <></>
+            ) : lawData.length > 0 ? (
               <View style={styles.tabbar}>
                 <View
                   style={[styles.tab__title__box, styles[clickedClassName[0]]]}>
@@ -277,6 +289,24 @@ function Search() {
                   <Text onPress={() => selectOne(2)} style={styles.tabtitle}>
                     기각
                   </Text>
+                </View>
+              </View>
+            ) : (
+              <View style={styles.tabbar}>
+                <View style={{backgroundColor: '#F4F4F4'}}>
+                  <Text
+                    onPress={() => selectOne(0)}
+                    style={styles.tabtitle}></Text>
+                </View>
+                <View style={{backgroundColor: '#F4F4F4'}}>
+                  <Text
+                    onPress={() => selectOne(1)}
+                    style={styles.tabtitle}></Text>
+                </View>
+                <View style={{backgroundColor: '#F4F4F4'}}>
+                  <Text
+                    onPress={() => selectOne(2)}
+                    style={styles.tabtitle}></Text>
                 </View>
               </View>
             )}

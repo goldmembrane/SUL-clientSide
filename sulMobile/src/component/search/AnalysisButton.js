@@ -1,21 +1,32 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
 const styles = StyleSheet.create({
-  titleBox: {
-    width: '85%',
-    height: '10%',
+  analysis__button: {
+    width: '70%',
+    height: 50,
+    borderRadius: 25,
+    position: 'absolute',
+    bottom: 30,
+    backgroundColor: '#82A3D6',
     justifyContent: 'center',
-    paddingHorizontal: 15,
+    alignItems: 'center',
   },
-  title: {
-    fontSize: 20,
+  analysis__button__text: {
+    textAlign: 'center',
     color: 'white',
+    fontSize: 24,
   },
 });
 
-export const AnalysisButton = () => (
-  <View style={styles.titleBox}>
-    <Text style={styles.title}>분석하기</Text>
-  </View>
+const AnalysisButton = ({setIsAnalysis, setIsDetail}) => (
+  <TouchableOpacity
+    style={styles.analysis__button}
+    onPress={() => {
+      setIsAnalysis(true);
+      setIsDetail(false);
+    }}>
+    <Text style={styles.analysis__button__text}>분석하기</Text>
+  </TouchableOpacity>
 );
+export default AnalysisButton;

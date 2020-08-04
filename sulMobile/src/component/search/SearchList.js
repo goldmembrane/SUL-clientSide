@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import {SearchListBox} from './SearchListBox';
 
 const styles = StyleSheet.create({
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     // flexWrap: 'wrap',
     // justifyContent: 'space-around',
     // alignContent: 'flex-start',
-    justifyContent: 'flex-start',
+    // justifyContent: 'flex-start',
   },
   // box: {
   //   width: '40%',
@@ -30,21 +30,29 @@ const styles = StyleSheet.create({
 const SearchList = ({setIsDetail, laws}) => {
   // console.log('por', props);
   return (
-    <View style={styles.allBox}>
-      {laws?.map((law, index) =>
-        index < 16 ? (
+    <ScrollView style={styles.allBox}>
+      {laws?.map(
+        (law, index) => (
           <SearchListBox
             key={law.id || index}
             law={law}
             setIsDetail={setIsDetail}
           />
-        ) : (
-          <View key={index}></View>
         ),
+
+        // index < 14 ? (
+        //   <SearchListBox
+        //     key={law.id || index}
+        //     law={law}
+        //     setIsDetail={setIsDetail}
+        //   />
+        // ) : (
+        //   <View key={index}></View>
+        // ),
       )}
       {/* <SearchListBox setIsDetail={setIsDetail} /> */}
       {/* <View style={styles.box}></View> */}
-    </View>
+    </ScrollView>
   );
 };
 export default SearchList;
