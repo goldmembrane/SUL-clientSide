@@ -24,16 +24,16 @@ function HistoryList({historyData}) {
   let historyScreen;
   if (historyData && historyData.length > 0) {
     historyScreen = (
-      <ScrollView style={styles.history}>
+      <View style={styles.history}>
         {historyData.map((his, index) => (
-          <HistoryListBox key={his.id || index} his={his} />
+          <HistoryListBox key={index} index={index} his={his} />
         ))}
-      </ScrollView>
+      </View>
     );
   } else {
     historyScreen = <View></View>;
   }
-  return <View>{historyScreen}</View>;
+  return <ScrollView style={{paddingVertical: 10}}>{historyScreen}</ScrollView>;
 }
 
 export default HistoryList;

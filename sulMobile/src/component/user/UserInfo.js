@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-
+import {useSelector} from 'react-redux';
 import {
   StyleSheet,
   ScrollView,
@@ -22,6 +22,8 @@ import {lawgo} from '../helper/fetchApi';
 // import ParserLaw from './ParserLaw';
 import useConfirmLogin from '../../hooks/useConfirmLogin';
 import HistoryList from './historyList';
+import RefreshButton from './refreshButton';
+import LodingAnimation from '../helper/lodingAnimation';
 
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 const styles = StyleSheet.create({
@@ -147,6 +149,8 @@ export default function UserInfo(props) {
   //유저 검색 히스토리 배열
   const [historyData, setHistoryData] = useState([]);
 
+  let isLodingNow = useSelector((state) => state.loding.isLoding);
+
   useEffect(() => {
     fetchUserInfoGet()
       .then((data) => {
@@ -237,116 +241,136 @@ export default function UserInfo(props) {
   }
   return (
     <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
-      {isLogin ? (
+      {isLodingNow ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <LodingAnimation />
+        </View>
+      ) : (
         <View style={styles.all}>
-          <View style={styles.header}>
-            <SULteamTitle />
-            {/* <View style={styles.titleBox}>
+          {isLogin ? (
+            <View style={styles.all}>
+              <View style={styles.header}>
+                <SULteamTitle />
+                {/* <View style={styles.titleBox}>
             <Text style={styles.title}>SUL team</Text>
           </View> */}
-          </View>
-          <View style={styles.username}>
-            {isEdName ? (
-              <TextInput
-                style={styles.inputBox}
-                underlineColorAndroid="rgba(0,0,0,0)"
-                placeholder="username"
-                placeholderTextColor="'rgba(255, 255,255,0.5)',"
-                autoCapitalize="none"
-                //"#ffffff"
-                defaultValue={userInfo.username}
-                selectionColor="black"
-                onChangeText={(text) => {
-                  setUserName(text);
-                }}
-              />
-            ) : (
-              <Text style={{color: 'black', fontSize: 20}}>
-                {userInfo.username}
-              </Text>
-            )}
-          </View>
-          <View style={styles.infoBox}>
-            <View style={styles.profilePicBox}>
-              {/* <View style={styles.circle}></View>
-               */}
-              <PicProfile
-                isEdit={isEdit}
-                isEdit={isEdit}
-                upDateUserPicUrl={upDateUserPicUrl.bind(this)}
-              />
-              <View style={{flexDirection: 'row'}}>
-                {isEdit ? (
-                  <Icon
-                    name="pencil"
-                    size={18}
-                    color="black"
-                    onPress={() => {
-                      setIsEdName(true);
+              </View>
+              <View style={styles.username}>
+                {isEdName ? (
+                  <TextInput
+                    style={styles.inputBox}
+                    underlineColorAndroid="rgba(0,0,0,0)"
+                    placeholder="username"
+                    placeholderTextColor="'rgba(255, 255,255,0.5)',"
+                    autoCapitalize="none"
+                    //"#ffffff"
+                    defaultValue={userInfo.username}
+                    selectionColor="black"
+                    onChangeText={(text) => {
+                      setUserName(text);
                     }}
                   />
                 ) : (
-                  <></>
+                  <Text style={{color: 'black', fontSize: 20}}>
+                    {userInfo.username}
+                  </Text>
                 )}
+              </View>
+              <View style={styles.infoBox}>
+                <View style={styles.profilePicBox}>
+                  {/* <View style={styles.circle}></View>
+                   */}
+                  <PicProfile
+                    isEdit={isEdit}
+                    isEdit={isEdit}
+                    upDateUserPicUrl={upDateUserPicUrl.bind(this)}
+                  />
+                  <View style={{flexDirection: 'row'}}>
+                    {isEdit ? (
+                      <Icon
+                        name="pencil"
+                        size={18}
+                        color="black"
+                        onPress={() => {
+                          setIsEdName(true);
+                        }}
+                      />
+                    ) : (
+                      <></>
+                    )}
 
-                {/* <Text style={{color: 'black'}}>{userInfo.username}님</Text> */}
+                    {/* <Text style={{color: 'black'}}>{userInfo.username}님</Text> */}
+                  </View>
+                </View>
+                <View style={styles.profileInfoBox}>
+                  <SignOut {...props} />
+                  {/* <Text style={styles.profileInfoBox__logout}>Logout</Text> */}
+                  <Text style={styles.profileInfoBox__text}>
+                    {userInfo.email}
+                  </Text>
+                  {isEdit ? (
+                    <View style={styles.profileInfoBox__okcanclebox}>
+                      <Text
+                        style={styles.profileInfoBox__text__button}
+                        onPress={() => {
+                          setIsEdit(false);
+                          setIsEdName(false);
+                          toPutUserInfo();
+                        }}>
+                        수정완료
+                      </Text>
+                      <Text
+                        style={styles.profileInfoBox__text__button}
+                        onPress={() => {
+                          setIsEdit(false);
+                          setIsEdName(false);
+                          cancleInfo();
+                        }}>
+                        취소
+                      </Text>
+                    </View>
+                  ) : (
+                    <Text
+                      style={styles.profileInfoBox__text}
+                      onPress={() => {
+                        setIsEdit(true);
+                        console.log('???');
+                      }}>
+                      정보수정
+                    </Text>
+                  )}
+                </View>
+
+                {/* </View> */}
+              </View>
+              <View>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Text style={styles.history__maintitle}>History</Text>
+                  {/* <Text
+                style={{
+                  alignSelf: 'center',
+                  fontSize: 20,
+                }}>
+                refresh
+              </Text> */}
+                  <RefreshButton setHistoryData={setHistoryData} />
+                </View>
+              </View>
+              <View style={styles.history}>
+                <HistoryList historyData={historyData} />
               </View>
             </View>
-            <View style={styles.profileInfoBox}>
-              <SignOut {...props} />
-              {/* <Text style={styles.profileInfoBox__logout}>Logout</Text> */}
-              <Text style={styles.profileInfoBox__text}>{userInfo.email}</Text>
-              {isEdit ? (
-                <View style={styles.profileInfoBox__okcanclebox}>
-                  <Text
-                    style={styles.profileInfoBox__text__button}
-                    onPress={() => {
-                      setIsEdit(false);
-                      setIsEdName(false);
-                      toPutUserInfo();
-                    }}>
-                    수정완료
-                  </Text>
-                  <Text
-                    style={styles.profileInfoBox__text__button}
-                    onPress={() => {
-                      setIsEdit(false);
-                      setIsEdName(false);
-                      cancleInfo();
-                    }}>
-                    취소
-                  </Text>
-                </View>
-              ) : (
-                <Text
-                  style={styles.profileInfoBox__text}
-                  onPress={() => {
-                    setIsEdit(true);
-                    console.log('???');
-                  }}>
-                  정보수정
-                </Text>
-              )}
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text onPress={toLogin}>로그인이 필요합니다!</Text>
             </View>
-
-            {/* </View> */}
-          </View>
-          <View>
-            <Text style={styles.history__maintitle}>History</Text>
-          </View>
-          <View style={styles.history}>
-            <HistoryList historyData={historyData} />
-          </View>
-        </View>
-      ) : (
-        <View
-          style={{
-            flex: 1,
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text onPress={toLogin}>로그인이 필요합니다!</Text>
+          )}
         </View>
       )}
     </TouchableWithoutFeedback>

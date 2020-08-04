@@ -15,3 +15,13 @@ export function fetchDismiss(keyword) {
     },
   });
 }
+//accept
+export function fetchAcc(keyword) {
+  console.log('Acc fetch start');
+
+  return axios.get(baseUrl + '/search/accept', {
+    params: {
+      keyword: keyword,
+    },
+  });
+}

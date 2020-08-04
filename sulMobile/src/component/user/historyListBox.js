@@ -30,6 +30,13 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 24,
   },
+  // history__contentbox: {
+  //   width: '100%',
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'center',
+  //   paddingVertical: 7,
+  // },
   history__contentbox: {
     width: '100%',
     flexDirection: 'row',
@@ -46,13 +53,14 @@ const styles = StyleSheet.create({
   },
 });
 
-function History({his}) {
+function History({index, his}) {
   //his 데이터를 받아서 뿌려줌
   return (
     <View style={styles.history__contentbox}>
-      <View style={{paddingLeft: 20, width: '85%'}}>
+      <View>
+        {/* <View style={{paddingLeft: 20, width: '85%'}}> */}
         <Text style={styles.history__content__title}>
-          검색어 : {his.keyword}
+          {index} : {his.keyword}
         </Text>
         {/* <View style={{flexDirection: 'row'}}>
           <Text style={{marginRight: 10}}>폭력으로 다리 피해</Text>

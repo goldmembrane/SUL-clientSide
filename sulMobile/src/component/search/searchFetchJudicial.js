@@ -4,8 +4,11 @@ import {useDispatch} from 'react-redux';
 import {fetchJudicial} from '../helper/fetchApi';
 // import {fetchJudicialGet} from '../helper/fetchApi';
 import {fetchDismiss} from '../helper/fetchDismissApi';
+import {fetchAcc} from '../helper/fetchDismissApi';
 import {fetchKeyPost} from '../helper/fetchKeyWord';
 import {isLoding} from '../../store/modules/loding';
+import {putDisMiss} from '../../store/modules/dismissModule';
+import {putAcc} from '../../store/modules/accModule';
 
 const styles = StyleSheet.create({
   inputBox: {
@@ -59,9 +62,14 @@ function SearchFetchJudicial(props) {
       props.setLawData([]);
       return;
     }
+    //로딩 시작
     dispatch(isLoding(true));
+    //판결문보기 아님
     props.setIsDetail(false);
+    //분석하기 아님
     props.setIsAnalysis(false);
+    //전체 보기로
+    props.setClickedClassName(['click', 'notClick', 'notClick']);
     // const waiting = await fetchJudicial(props.searchText);
     fetchJudicial(props.searchText)
       // fetchJudicialGet(props.searchText)
@@ -121,11 +129,23 @@ function SearchFetchJudicial(props) {
           //디스미스를 구해야하며 검색결과도 보내줘야함
           const getDismissData = await fetchDismiss(props.searchText);
           const dismissCount = getDismissData.data;
-          console.log(dismissCount, 'count!!!');
+          // console.log(dismissCount, 'count!!!');
+          if (isArr(dismissCount)) dispatch(putDisMiss(dismissCount));
+
+          //accpet 결과도 가져와야 함
+          const getAccData = await fetchAcc(props.searchText);
+          const accCount = getAccData.data;
+          console.log(accCount, 'count!!!');
+          if (isArr(accCount)) dispatch(putAcc(accCount));
+
           //   if( dismissCount)
           // props.setDismiss(dismissCount)
           //결과 유저정보에 저장
           // await fetchKeyPost(dismiss, total, props.searchText)
+          function isArr(arr) {
+            if (Array.isArray(arr)) return true;
+            return false;
+          }
         } catch (e) {
           console.log(e, 'dismiss');
         }
