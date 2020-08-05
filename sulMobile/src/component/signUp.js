@@ -93,21 +93,14 @@ function signUp({navigation}) {
     }
     fetchSignUp(email, id, password)
       .then((data) => {
-        if (data.status === 200) {
+        if (data.status === 201) {
           Alert.alert(
-            '회원가입 확인',
-            '회원가입 되었습니다. 로그인 페이지로 이동합니다',
-            [{text: '확인', onPress: () => navigation.navigate('SignIn')}],
+            `회원가입 되었습니다. 
+로그인 페이지로 이동합니다.`,
+            [{text: '확인', onPress: () => navigation.navigate('signin')}],
             {cancelable: false},
           );
           // props.navigtion.navigate('Home')
-        } else {
-          Alert.alert(
-            'error',
-            '회원가입이 되지 않았습니다',
-            [{text: '확인', onPress: () => navigation.navigate('Home')}],
-            {cancelable: false},
-          );
         }
       })
       .catch((e) => {
@@ -117,8 +110,8 @@ function signUp({navigation}) {
           console.log('err409');
         } else {
           Alert.alert(
-            'error',
-            '회웍가입에 문제가 있습니다',
+            'ERROR',
+            '회원가입에 문제가 있습니다',
             [
               // {text: 'Ask me later', onPress: () => console.warn('Ask me later pressed')},
               // {text: 'NO', onPress: () => console.warn('NO Pressed'), style: 'cancel'},
@@ -142,8 +135,8 @@ function signUp({navigation}) {
     return regExp.test(str) ? true : false;
   }
   function chkId(str) {
-    if (str.length < 4) {
-      setIdmsg('아이디를 4자 이상 입력해 주세요');
+    if (str.length < 2) {
+      setIdmsg('아이디를 2자 이상 입력해 주세요');
       return false;
     } else {
       setIdmsg('');
@@ -175,7 +168,7 @@ function signUp({navigation}) {
         style={{flex: 1}}>
         <View style={[styles.row, styles.header]}>
           <ImageBackground
-            source={require('../img/iu.jpg')}
+            source={require('../../assets/background/loginBackground1.jpg')}
             style={styles.bgImage}
             // resizeMethod="cover"
           >

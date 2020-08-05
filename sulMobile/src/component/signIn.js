@@ -102,8 +102,6 @@ function signIn({navigation}) {
           );
           onConfirmLogin(true);
           // props.navigtion.navigate('Home')
-        } else {
-          Alert.alert('입력정보가 올바르지 않습니다');
         }
       })
       .catch((e) => {
@@ -113,12 +111,11 @@ function signIn({navigation}) {
         //   [{text: '확인', onPress: () => navigation.navigate('Home')}],
         //   {cancelable: false},
         // );
-        if (e.response.status === 404) {
+        if (e.response.status === 400) {
           Alert.alert('아이디나 비밀번호가 맞지 않습니다.');
         } else {
           Alert.alert(
-            'error',
-            '로그인에 문제가 있습니다',
+            '존재하지 않는 회원입니다.',
             // [{text: '확인', onPress: () => navigation.navigate('Home')}],
             {cancelable: false},
           );
@@ -154,7 +151,7 @@ function signIn({navigation}) {
         style={{flex: 1}}>
         <View style={[styles.row, styles.header]}>
           <ImageBackground
-            source={require('../img/iu.jpg')}
+            source={require('../../assets/background/loginBackground1.jpg')}
             style={styles.bgImage}
             // resizeMethod="cover"
           >
