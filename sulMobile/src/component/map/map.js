@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
   SafeAreaView,
@@ -17,7 +17,9 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+
+import {fetchMarker} from '../helper/fetchMap';
 
 const styles = StyleSheet.create({
   map: {
@@ -28,6 +30,17 @@ const styles = StyleSheet.create({
 });
 
 export default function Map() {
+  [markers, setMarkers] = useState([]);
+  // [currentPosition, setCurrentPosition] = useState([37.4959854, 127.0664091]);
+  useEffect(() => {
+    fetchMarker().then((response) => setMarkers(response.data));
+  }, []);
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     setCurrentPosition([position.coords.latitude, position.coords.longitude]);
+  //   });
+  // }, [currentPosition]);
+
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <MapView
@@ -38,8 +51,20 @@ export default function Map() {
           longitude: 127.0664091,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
-        }}
-      />
+        }}>
+        {markers.map((marker) => (
+          <Marker
+            key={marker.id}
+            coordinate={{
+              latitude: marker.latitude,
+              longitude: marker.longitude,
+            }}
+            title={marker.office_name}
+            description={`${marker.address}
+${marker.tel}`}
+          />
+        ))}
+      </MapView>
     </View>
   );
 }
