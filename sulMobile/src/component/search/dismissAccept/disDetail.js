@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {StyleSheet, View, Text, ScrollView} from 'react-native';
-import goDetailFuntion from './goDetailFuntion';
+import goDetailFuntion from '../../helper/goDetailFuntion';
 import {senTenCing} from '../../../store/modules/sentencing';
 import {isLoding} from '../../../store/modules/loding';
 
@@ -74,14 +74,13 @@ function DisDetail(props) {
       break;
     }
     arr.push(
-      <Text style={styles.textBox}>
+      <Text style={styles.textBox} key={i}>
         <Text
-          key={i}
           style={styles.textBox}
           onPress={() => goDetail(disMissData[i].dismiss)}>
           {i + 1} : {disMissData[i].title}
         </Text>
-        <Text key={'dismiss' + i}></Text>
+        <Text></Text>
       </Text>,
     );
   }

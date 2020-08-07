@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  SafeAreaView,
   StyleSheet,
   View,
   Text,
@@ -11,61 +12,46 @@ import {
 import {TextInput, TouchableOpacity, Alert} from 'react-native';
 import {fetchSignIn} from './helper/fetchApi';
 import useConfirmLogin from '../hooks/useConfirmLogin';
+import css from './signCss';
 
 const styles = StyleSheet.create({
   header: {flex: 1},
   bgImage: {width: '100%', height: '100%'},
   titleBox: {
     flex: 1.3,
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
   },
+  nullBox__top: {
+    flex: 0.3,
+  },
+  nullBox: {
+    flex: 0.0,
+  },
+  blankBox: {
+    flex: 1.5,
+  },
+  blankBox__bottom: {
+    flex: 0.5,
+  },
   main: {
-    flex: 3,
+    flex: 3.8,
     justifyContent: 'center',
     alignItems: 'center',
   },
   title: {
-    fontSize: 36,
-    fontWeight: '800',
+    fontSize: 50,
+    fontWeight: '200',
     color: '#ffffff',
   },
   msgBox: {
     width: 300,
     height: 30,
   },
-  blankBox: {
-    width: 300,
-    height: 150,
-  },
-  inputBox: {
-    width: 300,
-    height: 50,
-    backgroundColor: 'rgba(255, 255,255,0.2)',
-    borderRadius: 10,
-    // borderRadius: 25,
-    paddingHorizontal: 16,
-    fontSize: 20,
-    color: '#ffffff',
-    // marginVertical: 10,
-  },
-  button: {
-    width: 300,
-    height: 50,
-    backgroundColor: '#1c313a',
-
-    marginVertical: 10,
-    paddingVertical: 13,
-  },
-  loginButton: {
-    width: 300,
-    height: 50,
-    backgroundColor: 'gray',
-
-    paddingVertical: 13,
-  },
+  //inputbox, login, signup Box 는 css에
   buttonText: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: '400',
     color: 'white',
     textAlign: 'center',
@@ -75,6 +61,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     color: 'red',
   },
+  ...css,
 });
 
 function signIn({navigation}) {
@@ -145,77 +132,82 @@ function signIn({navigation}) {
     Keyboard.dismiss();
   };
   return (
-    <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        style={{flex: 1}}>
-        <View style={[styles.row, styles.header]}>
-          <ImageBackground
-            source={require('../../assets/background/loginBackground1.jpg')}
-            style={styles.bgImage}
-            // resizeMethod="cover"
-          >
-            <View style={styles.titleBox}>
-              <Text style={styles.title}>SUL team</Text>
-            </View>
-            <View style={styles.main}>
-              <TextInput
-                autoFocus={true}
-                style={styles.inputBox}
-                underlineColorAndroid="'rgba(0, 0,0,0.5)',"
-                placeholder="Email"
-                placeholderTextColor="'rgba(255, 255,255,0.5)',"
-                selectionColor="#fff"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                onChangeText={(text) => {
-                  setEmail(text);
-                  chkEmail(text);
-                  // console.log(email, 'email');
-                }}
-                returnKeyType="next"
-                onSubmitEditing={() => {
-                  this.password.focus();
-                }}
-                blurOnSubmit={false}
-              />
-              <View style={styles.msgBox}>
-                <Text style={styles.errmsg}>{errmsg}</Text>
+    <ImageBackground
+      source={require('../../assets/background/loginBackground1.jpg')}
+      style={styles.bgImage}
+      // resizeMethod="cover"
+    >
+      <SafeAreaView style={{flex: 1}}>
+        <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+            style={{flex: 1}}>
+            <View style={[styles.row, styles.header]}>
+              <View style={styles.nullBox__top}></View>
+              <View style={styles.titleBox}>
+                <Text style={styles.title}>SUL team</Text>
               </View>
-              <TextInput
-                style={styles.inputBox}
-                underlineColorAndroid="rgba(0,0,0,0)"
-                placeholder="Password"
-                secureTextEntry={true}
-                placeholderTextColor="'rgba(255, 255,255,0.5)',"
-                returnKeyType="next"
-                onChangeText={(text) => {
-                  setPassword(text);
-                  chkPassword(text);
-                }}
-                ref={(input) => {
-                  this.password = input;
-                }}
-              />
-              <View style={styles.msgBox}>
-                <Text style={styles.errmsg}>{passmsg}</Text>
+              <View style={styles.nullBox}></View>
+              <View style={styles.main}>
+                <TextInput
+                  autoFocus={true}
+                  style={styles.inputBox}
+                  underlineColorAndroid="'rgba(0, 0,0,0.5)',"
+                  placeholder="Email"
+                  placeholderTextColor="'rgba(255, 255,255,0.8)',"
+                  selectionColor="#fff"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  onChangeText={(text) => {
+                    setEmail(text);
+                    chkEmail(text);
+                    // console.log(email, 'email');
+                  }}
+                  returnKeyType="next"
+                  onSubmitEditing={() => {
+                    this.password.focus();
+                  }}
+                  blurOnSubmit={false}
+                />
+                <View style={styles.msgBox}>
+                  <Text style={styles.errmsg}>{errmsg}</Text>
+                </View>
+                <TextInput
+                  style={styles.inputBox}
+                  underlineColorAndroid="rgba(0,0,0,0)"
+                  placeholder="Password"
+                  secureTextEntry={true}
+                  placeholderTextColor="'rgba(255, 255,255,0.8)',"
+                  returnKeyType="next"
+                  onChangeText={(text) => {
+                    setPassword(text);
+                    chkPassword(text);
+                  }}
+                  ref={(input) => {
+                    this.password = input;
+                  }}
+                />
+                <View style={styles.msgBox}>
+                  <Text style={styles.errmsg}>{passmsg}</Text>
+                </View>
+                <View style={styles.blankBox}></View>
+                <TouchableOpacity
+                  style={styles.loginButton}
+                  onPress={() => toFetchSignIn(email, password)}>
+                  <Text style={styles.buttonText}>로그인</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigation.navigate('signup')}>
+                  <Text style={styles.buttonText}>회원가입</Text>
+                </TouchableOpacity>
+                <View style={styles.blankBox__bottom}></View>
               </View>
-              <View style={styles.blankBox}></View>
-              <TouchableOpacity
-                style={styles.loginButton}
-                onPress={() => toFetchSignIn(email, password)}>
-                <Text style={styles.buttonText}>로그인</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('signup')}>
-                <Text style={styles.buttonText}>회원가입</Text>
-              </TouchableOpacity>
             </View>
-          </ImageBackground>
-        </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
