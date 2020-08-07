@@ -1,4 +1,4 @@
-import ParserDetail from '../parserDetail';
+import ParserDetail from '../search/parserDetail';
 
 function goDetailFuntion(text) {
   return new Promise(async function (resolve, reject) {

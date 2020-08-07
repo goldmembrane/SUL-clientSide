@@ -4,6 +4,7 @@ import {StyleSheet, View, Text} from 'react-native';
 import ParserDetail from './parserDetail';
 import {senTenCing} from '../../store/modules/sentencing';
 import {isLoding} from '../../store/modules/loding';
+import goDetailFuntion from '../helper/goDetailFuntion';
 // const styles = StyleSheet.create({
 //   rowBox: {
 //     width: '100%',
@@ -32,9 +33,6 @@ import {isLoding} from '../../store/modules/loding';
 // );
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 16,
-  },
   history: {
     flex: 6,
     justifyContent: 'flex-start',
@@ -53,18 +51,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 7,
   },
+  dismiss: {
+    backgroundColor: 'rgba(255, 56, 56,0.2)',
+  },
+  acc: {
+    backgroundColor: 'rgba(126, 255, 245,0.2)',
+  },
   list__contentbox: {
-    marginVertical: 5,
+    paddingVertical: 5,
     paddingHorizontal: 10,
     marginHorizontal: 5,
-    backgroundColor: '#C4C4C4',
+    // backgroundColor: '#C4C4C4',
+    borderBottomColor: '#C4C4C4',
+    borderBottomWidth: 1,
   },
-  history__content__title: {
-    marginBottom: 5,
-    fontSize: 18,
-  },
-  history__content__day: {
-    color: 'gray',
+  list__title: {
+    fontSize: 16,
   },
 });
 //한 줄에 두개 씩 박스를 만들어냄
@@ -80,47 +82,58 @@ export const SearchListBox = (props) => {
 
   const dispatch = useDispatch();
 
+  // const goDetail = async (text) => {
+  //   console.log(text, 'searchListBox');
+  //   // const text = e._dispatchInstances.memoizedProps.children;
+  //   // console.log(text, 'value??');
+  //   // if (typeof text !== 'string' || text == '') {
+  //   //   console.log('not');
+  //   //   return;
+  //   // }
+  //   try {
+  //     dispatch(isLoding(true));
+  //     let a = await ParserDetail(text);
+  //     //디테일 화면으로 넘어감
+  //     props.setIsDetail(true);
+  //     console.log(a, 'aaa');
+  //     //redux start!!!
+  //     dispatch(senTenCing(a));
+  //     dispatch(isLoding(false));
+  //   } catch (e) {
+  //     dispatch(isLoding(false));
+  //     console.log(e, 'err');
+  //   }
+  // };
   const goDetail = async (text) => {
-    console.log(text, 'searchListBox');
-    // const text = e._dispatchInstances.memoizedProps.children;
-    // console.log(text, 'value??');
-    // if (typeof text !== 'string' || text == '') {
-    //   console.log('not');
-    //   return;
-    // }
     try {
       dispatch(isLoding(true));
-      let a = await ParserDetail(text);
-      //디테일 화면으로 넘어감
+      let data = await goDetailFuntion(text);
       props.setIsDetail(true);
-      console.log(a, 'aaa');
-      //redux start!!!
-      dispatch(senTenCing(a));
+      dispatch(senTenCing(data));
       dispatch(isLoding(false));
     } catch (e) {
       dispatch(isLoding(false));
       console.log(e, 'err');
     }
-
-    // fetchJudicial('폭력')
-    //   .then((data) => {
-    //     props.setLawData(fakeData);
-    //     return console.log(data.data, 'search data');
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //     Alert.alert(
-    //       'error',
-    //       '',
-    //       {cancelable: false},
-    //     );
-    //   });
   };
-
   return (
-    <View style={styles.list__contentbox}>
-      <Text style={styles.title} onPress={() => goDetail(props.law)}>
-        {props.law}
+    <View
+      style={[
+        styles.list__contentbox,
+        styles[props.law.accept ? 'acc' : props.law.dismiss ? 'dismiss' : ''],
+      ]}>
+      <Text
+        style={styles.list__title}
+        onPress={() =>
+          goDetail(
+            props.law.accept
+              ? props.law.accept
+              : props.law.dismiss
+              ? props.law.dismiss
+              : '',
+          )
+        }>
+        {props?.index + 1} : {props.law?.title}
         {/* {props.law.title.slice(0, 28)}
         {props.law.subtitle.slice(5, 45)} */}
       </Text>

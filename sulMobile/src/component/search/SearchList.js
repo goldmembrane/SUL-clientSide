@@ -34,9 +34,10 @@ const SearchList = ({setIsDetail, laws}) => {
       {laws?.map(
         (law, index) => (
           <SearchListBox
-            key={law.id || index}
+            key={index}
             law={law}
             setIsDetail={setIsDetail}
+            index={index}
           />
         ),
 

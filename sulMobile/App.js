@@ -9,12 +9,19 @@ import {createStore, applyMiddleware} from 'redux';
 import rootReducer from './src/store/modules';
 import {Provider} from 'react-redux';
 import loggerMiddleware from './loggerMiddleware';
+//saga
+import createSagaMiddleware from 'redux-saga';
+import mySaga from './src/store/modules/sagas';
+const sagaMiddleware = createSagaMiddleware();
 
 // 스토어 만들기
-const store = createStore(rootReducer, applyMiddleware(loggerMiddleware));
+const store = createStore(
+  rootReducer,
+  applyMiddleware(sagaMiddleware, loggerMiddleware),
+);
 // 현재값 확인
 // console.log(store.getState());
-
+sagaMiddleware.run(mySaga);
 const App = () => {
   return (
     <Provider store={store}>
