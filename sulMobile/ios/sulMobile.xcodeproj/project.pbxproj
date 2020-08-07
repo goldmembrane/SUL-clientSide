@@ -16,6 +16,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* sulMobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* sulMobileTests.m */; };
+		6ECBA4C024DC70D30032D6BA /* supportSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECBA4BF24DC70D30032D6BA /* supportSwift.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B02C67AB448F42734BF1A79B /* libPods-sulMobile-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34F21415A05DB7AB49A25E30 /* libPods-sulMobile-tvOSTests.a */; };
 		E19DFAE6CDAA603C4ED3C881 /* libPods-sulMobile-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9B5EDF7163BD5FFBBA7996 /* libPods-sulMobile-tvOS.a */; };
@@ -59,6 +60,8 @@
 		45D06698237EF94311504557 /* libPods-sulMobile-sulMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sulMobile-sulMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EB1D13860ACB9320D4E2CE4 /* libPods-sulMobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sulMobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E9ACB912274B0DBEAF2E181 /* Pods-sulMobile-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sulMobile-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-sulMobile-tvOS/Pods-sulMobile-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		6ECBA4BE24DC70D30032D6BA /* sulMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sulMobile-Bridging-Header.h"; sourceTree = "<group>"; };
+		6ECBA4BF24DC70D30032D6BA /* supportSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = supportSwift.swift; sourceTree = "<group>"; };
 		78D7AEAF4D98A3B925B39809 /* Pods-sulMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sulMobile.release.xcconfig"; path = "Target Support Files/Pods-sulMobile/Pods-sulMobile.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = sulMobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8AE200451F18127275C037AF /* Pods-sulMobile-sulMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sulMobile-sulMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-sulMobile-sulMobileTests/Pods-sulMobile-sulMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -148,6 +151,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				6ECBA4BF24DC70D30032D6BA /* supportSwift.swift */,
+				6ECBA4BE24DC70D30032D6BA /* sulMobile-Bridging-Header.h */,
 			);
 			name = sulMobile;
 			sourceTree = "<group>";
@@ -334,7 +339,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = GCJ3SMVGWP;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1160;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -679,6 +684,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				6ECBA4C024DC70D30032D6BA /* supportSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,6 +725,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8AE200451F18127275C037AF /* Pods-sulMobile-sulMobileTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -742,6 +749,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0D6989613EC4157A9082B381 /* Pods-sulMobile-sulMobileTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = sulMobileTests/Info.plist;
@@ -779,6 +787,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = sulMobile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "sulMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -805,6 +814,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = sulMobile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "sulMobile-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
