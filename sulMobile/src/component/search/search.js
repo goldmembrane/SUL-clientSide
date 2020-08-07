@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, Text, Dimensions, StatusBar} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import fakeData from './fakeData';
 import SearchList from './SearchList';
@@ -17,7 +17,23 @@ import AccDetail from './dismissAccept/accDetail';
 const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
 const styles = StyleSheet.create({
   all: {flex: 1, backgroundColor: 'white'},
-  header: {marginTop: 70, justifyContent: 'flex-end', backgroundColor: 'white'},
+  header: {
+    flex: 1.2,
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#F4F4F4',
+  },
+  headerSearch: {
+    flex: 0.8,
+    flexDirection: 'row',
+    width: '90%',
+    backgroundColor: '#e4e4e4',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 15,
+  },
   body: {
     flex: 6,
     // justifyContent: 'center',
@@ -25,13 +41,16 @@ const styles = StyleSheet.create({
     // width: '100%',
   },
   title: {
-    fontSize: 24,
-    color: 'gray',
+    fontWeight: '200',
+    fontSize: 30,
+    color: 'black',
+    marginVertical: 10,
   },
   titleBox: {
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-    paddingBottom: 5,
+    flex: 1.1,
+    backgroundColor: 'white',
+    justifyContent: 'flex-end',
+    paddingHorizontal: 20,
   },
   inputBox: {
     width: '100%',
@@ -57,37 +76,41 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#F4F4F4',
-    marginVertical: 10,
   },
   tab__title__box: {
     width: '25%',
     flex: 1,
-    paddingVertical: 10,
+    justifyContent: 'center',
   },
   tab__detail__title__box1: {
     flex: 1,
-    paddingVertical: 10,
   },
   tab__detail__title__box2: {
-    flex: 6,
-    paddingVertical: 10,
+    flex: 1,
   },
   tabtitle: {
     textAlign: 'center',
     color: 'black',
     fontSize: 20,
+    marginBottom: 10,
+  },
+  clickTabtitle: {
+    textAlign: 'center',
+    color: 'red',
+    opacity: 0.5,
+    fontSize: 20,
   },
   click: {
     borderBottomColor: 'black',
-    borderBottomWidth: 2,
-    // background: '#ffffff', // 배경색이 없으면 그림자가 안보일 수 있음.
-    //IOS
-    shadowColor: 'black',
-    //그림자색
-    shadowOpacity: 0.5, //그림자 투명도
-    shadowOffset: {width: 2, height: 3}, //그림자 위치
-    //ANDROID
-    elevation: 3,
+    borderBottomWidth: 1.5,
+    // backgroundColor: '#ffffff', // 배경색이 없으면 그림자가 안보일 수 있음.
+    // //IOS
+    // shadowColor: 'black',
+    // //그림자색
+    // shadowOpacity: 0.5, //그림자 투명도
+    // shadowOffset: {width: 1, height: 1}, //그림자 위치
+    // //ANDROID
+    // elevation: 3,
   },
   main: {
     flex: 1,
@@ -179,13 +202,13 @@ function Search() {
                   overflow: 'hidden',
                   // paddingLeft: WIDTH / 10,
                 }}>
-                검색어 : {searchKeyword}
+                {searchKeyword}
               </Text>
               <Text
                 style={{
                   flex: 1,
                   fontSize: 20,
-                  color: 'blue',
+                  color: 'rgba(0,0,0,0.5)',
                   textAlign: 'right',
                   paddingHorizontal: 16,
                 }}>
@@ -233,37 +256,26 @@ function Search() {
         </View>
       ) : (
         <>
+          <View style={styles.titleBox}>
+            <Text style={styles.title}>SUL team</Text>
+          </View>
           <View style={styles.header}>
-            <View style={styles.titleBox}>
-              <Text style={styles.title}>SUL team</Text>
+            <View style={styles.headerSearch}>
+              <Ionicons
+                name={'search-outline'}
+                size={30}
+                color={'rgba(0, 0,0,0.5)'}
+              />
+              <SearchFetchJudicial
+                setSearchText={setSearchText}
+                setLawData={setLawData}
+                searchText={searchText}
+                setIsDetail={setIsDetail}
+                setIsAnalysis={setIsAnalysis}
+                setSearchKeyword={setSearchKeyword}
+                setClickedClassName={setClickedClassName}
+              />
             </View>
-            <SearchFetchJudicial
-              setSearchText={setSearchText}
-              setLawData={setLawData}
-              searchText={searchText}
-              setIsDetail={setIsDetail}
-              setIsAnalysis={setIsAnalysis}
-              setSearchKeyword={setSearchKeyword}
-              setClickedClassName={setClickedClassName}
-            />
-            {/* <View style={styles.inputBox}>
-            <TextInput
-              style={styles.textInputBox}
-              autoFocus={true}
-              underlineColorAndroid="'rgba(0, 0,0,0.5)',"
-              placeholder="검색하기"
-              placeholderTextColor="'rgba(0, 0,0,0.5)',"
-              selectionColor="#fff"
-              autoCapitalize="none"
-              onChangeText={(text) => {
-                setSearchText(text);
-              }}
-              onSubmitEditing={() => {
-                searchHandler();
-                // console.log(lawData, 'lawdata');
-              }}
-            />
-          </View> */}
 
             {/* <------메뉴바 보여주는 컴포넌트 리스트를 클릭하면 이동 */}
             {isDetail ? (
@@ -310,20 +322,20 @@ function Search() {
               </View>
             ) : (
               <View style={styles.tabbar}>
-                <View style={{backgroundColor: '#F4F4F4'}}>
+                <View>
                   <Text
                     onPress={() => selectOne(0)}
-                    style={styles.tabtitle}></Text>
+                    style={styles.clickTabtitle}></Text>
                 </View>
-                <View style={{backgroundColor: '#F4F4F4'}}>
+                <View>
                   <Text
                     onPress={() => selectOne(1)}
-                    style={styles.tabtitle}></Text>
+                    style={styles.clickTabtitle}></Text>
                 </View>
-                <View style={{backgroundColor: '#F4F4F4'}}>
+                <View>
                   <Text
                     onPress={() => selectOne(2)}
-                    style={styles.tabtitle}></Text>
+                    style={styles.clickTabtitle}></Text>
                 </View>
               </View>
             )}
