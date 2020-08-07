@@ -39,7 +39,7 @@ export function postSignOut() {
 }
 
 export function fetchJudicial(keyword) {
-  console.log('fetchJudicial start');
+  console.log('fetchJudicial start', keyword);
   //키워드로 검색
   const obj = {
     keyword,
@@ -47,14 +47,6 @@ export function fetchJudicial(keyword) {
   return axios.post(baseUrl + '/search/post', obj);
 }
 
-export function fetchJudicialGet(keyword) {
-  console.log('fetchJudicialGet start');
-  return axios.get(baseUrl + '/search/get', {
-    params: {
-      keyword: keyword,
-    },
-  });
-}
 // export function fetchJudicialGet(keyword) {
 //   //키워드로 검색
 //   return axios.get(baseUrl + '/search/get', {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {StyleSheet, View, Text, ScrollView} from 'react-native';
-import goDetailFuntion from './goDetailFuntion';
+import goDetailFuntion from '../../helper/goDetailFuntion';
 import {senTenCing} from '../../../store/modules/sentencing';
 import {isLoding} from '../../../store/modules/loding';
 
@@ -60,14 +60,13 @@ function AccDetail(props) {
       break;
     }
     arr.push(
-      <Text style={styles.textBox}>
+      <Text style={styles.textBox} key={'acc' + i}>
         <Text
-          key={i}
           style={styles.textBox}
           onPress={() => goDetail(accData[i].accept)}>
           {i + 1} : {accData[i].title}
         </Text>
-        <Text key={'i' + i}></Text>
+        <Text></Text>
       </Text>,
     );
   }
