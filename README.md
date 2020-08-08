@@ -1,6 +1,6 @@
 # SUL-client
 [![npm Badge](https://img.shields.io/badge/npm-6.14.6-orange)](https://docs.npmjs.com/cli/version)
-[![react-native Badge](https://img.shields.io/badge/react--native-0.63.1-orange)](https://reactnative.dev/versions)
+[![react-native Badge](https://img.shields.io/badge/react--native-0.63.1-blue)](https://reactnative.dev/versions)
 [![react-navigation Badge](https://img.shields.io/badge/react--navigation-5.7.1-blueviolet)](https://reactnavigation.org/docs/getting-started)
 [![redux Badge](https://img.shields.io/badge/redux-4.0.5-brightgreen)](https://github.com/reduxjs/redux)
 <br/>
