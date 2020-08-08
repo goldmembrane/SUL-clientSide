@@ -8,10 +8,12 @@ function Detail() {
   const styles = StyleSheet.create({
     content__title: {
       fontSize: 24,
+      marginHorizontal: 15,
+      fontWeight: '200',
       textAlign: 'center',
     },
     content__day: {
-      fontSize: 16,
+      fontSize: 14,
       color: '#3C7EBC',
       textAlign: 'center',
     },
@@ -22,7 +24,7 @@ function Detail() {
     },
     content__text: {
       fontSize: 16,
-      // paddingVertical: 10,
+      fontWeight: '200',
       paddingHorizontal: 10,
       paddingBottom: 16,
     },
@@ -41,7 +43,7 @@ function Detail() {
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={{flex: 1}}>
           <Text style={styles.content__title}>{sentencingData?.title}</Text>
-          <Text style={styles.content__day}>{sentencingData?.day}</Text>
+          <Text style={styles.content__day}>{`${sentencingData?.day}`}</Text>
           {sentencingData?.data?.map((content, index) => (
             <View key={index}>
               <Text style={styles.content__minititle}>{arr[index]}</Text>

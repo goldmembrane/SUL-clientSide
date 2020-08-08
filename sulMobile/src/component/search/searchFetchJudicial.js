@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
   textInputBox: {
     width: '100%',
     height: 45,
+    fontWeight: '200',
     borderRadius: 20,
     // borderRadius: 25,
     paddingHorizontal: 10,
@@ -119,7 +120,7 @@ function SearchFetchJudicial(props) {
           //디스미스를 구해야하며 검색결과도 보내줘야함
           const getDismissData = await fetchDismiss(props.searchText);
           const dismissCount = getDismissData.data;
-          // console.log(dismissCount, 'count!!!');
+          console.log('dismissCount : ', getDismissData);
           if (isArr(dismissCount)) {
             dispatch(putDisMiss(dismissCount));
           } else {

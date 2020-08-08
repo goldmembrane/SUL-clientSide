@@ -22,13 +22,13 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#F9F9F9',
   },
   headerSearch: {
     flex: 0.8,
     flexDirection: 'row',
     width: '90%',
-    backgroundColor: '#e4e4e4',
+    backgroundColor: '#f4f4f4',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   textInputBox: {
     width: '85%',
     height: 50,
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#F9F9F9',
     borderRadius: 20,
     // borderRadius: 25,
     paddingHorizontal: 16,
@@ -75,33 +75,23 @@ const styles = StyleSheet.create({
     height: 40,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#F9F9F9',
   },
   tab__title__box: {
     width: '25%',
     flex: 1,
     justifyContent: 'center',
   },
-  tab__detail__title__box1: {
-    flex: 1,
-  },
-  tab__detail__title__box2: {
-    flex: 1,
-  },
   tabtitle: {
     textAlign: 'center',
     color: 'black',
-    fontSize: 20,
+    fontSize: 18,
+    fontWeight: '200',
     marginBottom: 10,
-  },
-  clickTabtitle: {
-    textAlign: 'center',
-    color: 'red',
-    opacity: 0.5,
-    fontSize: 20,
   },
   click: {
     borderBottomColor: 'black',
+    fontWeight: '100',
     borderBottomWidth: 1.5,
     // backgroundColor: '#ffffff', // 배경색이 없으면 그림자가 안보일 수 있음.
     // //IOS
@@ -114,15 +104,28 @@ const styles = StyleSheet.create({
   },
   main: {
     flex: 1,
-    // width: '100%',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // paddingBottom: 20,
   },
   mainText: {
     textAlign: 'center',
     color: 'black',
     fontSize: 24,
+    fontWeight: '200',
+  },
+  tab__detail__box: {
+    flex: 0.5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  tab__detail__box__title: {
+    flex: 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tab__detail__title: {
+    fontWeight: '200',
+    fontSize: 16,
   },
 });
 
@@ -195,9 +198,9 @@ function Search() {
               <Text
                 style={{
                   flex: 2,
-                  fontSize: 20,
+                  fontSize: 18,
                   textAlign: 'left',
-                  fontWeight: '700',
+                  fontWeight: '200',
                   paddingHorizontal: 16,
                   overflow: 'hidden',
                   // paddingLeft: WIDTH / 10,
@@ -206,13 +209,13 @@ function Search() {
               </Text>
               <Text
                 style={{
-                  flex: 1,
-                  fontSize: 20,
-                  color: 'rgba(0,0,0,0.5)',
+                  flex: 2,
+                  fontSize: 18,
+                  fontWeight: '200',
                   textAlign: 'right',
                   paddingHorizontal: 16,
                 }}>
-                총 : {lawData.length}건
+                총 {lawData.length}건
               </Text>
             </View>
             <SearchList laws={lawData} setIsDetail={setIsDetail} />
@@ -235,9 +238,13 @@ function Search() {
       );
       //두번째 탭인 승인과 세번째 탭인 기각 보여주기
     } else if (clickedClassName[1] == 'click') {
-      mainScreen = <AccDetail setIsDetail={setIsDetail} />;
+      mainScreen = (
+        <AccDetail setIsDetail={setIsDetail} searchKeyword={searchKeyword} />
+      );
     } else if (clickedClassName[2] == 'click') {
-      mainScreen = <DisDetail setIsDetail={setIsDetail} />;
+      mainScreen = (
+        <DisDetail setIsDetail={setIsDetail} searchKeyword={searchKeyword} />
+      );
     }
   } else {
     mainScreen = (
@@ -259,87 +266,125 @@ function Search() {
           <View style={styles.titleBox}>
             <Text style={styles.title}>SUL team</Text>
           </View>
-          <View style={styles.header}>
-            <View style={styles.headerSearch}>
-              <Ionicons
-                name={'search-outline'}
-                size={30}
-                color={'rgba(0, 0,0,0.5)'}
-              />
-              <SearchFetchJudicial
-                setSearchText={setSearchText}
-                setLawData={setLawData}
-                searchText={searchText}
-                setIsDetail={setIsDetail}
-                setIsAnalysis={setIsAnalysis}
-                setSearchKeyword={setSearchKeyword}
-                setClickedClassName={setClickedClassName}
-              />
+          {/* <------메뉴바 보여주는 컴포넌트 리스트를 클릭하면 이동 */}
+          {isDetail ? (
+            <View style={styles.tab__detail__box}>
+              <View style={[styles.tab__detail__box__back]}>
+                <Ionicons
+                  name="chevron-back-sharp"
+                  size={40}
+                  color="gray"
+                  onPress={() => setIsDetail(false)}
+                  style={{paddingLeft: 10}}
+                />
+              </View>
+              <View style={[styles.tab__detail__box__title]}>
+                <Text style={styles.tab__detail__title}>판결 내용</Text>
+              </View>
             </View>
-
-            {/* <------메뉴바 보여주는 컴포넌트 리스트를 클릭하면 이동 */}
-            {isDetail ? (
-              // 높이 40 균등분배
-              <View style={styles.tabbar}>
-                <View style={[styles.tab__detail__title__box1]}>
+          ) : isAnalysis ? (
+            <></>
+          ) : lawData.length > 0 ? (
+            <>
+              <View style={styles.header}>
+                <View style={styles.headerSearch}>
                   <Ionicons
-                    name="arrow-back-circle-outline"
+                    name={'search-outline'}
                     size={22}
-                    color="black"
-                    onPress={() => setIsDetail(false)}
-                    style={{paddingLeft: 10}}
+                    color={'rgba(0, 0,0,0.5)'}
                   />
-                  {/* <Text onPress={() => setIsDetail(false)} style={styles.tabtitle}>
-                뒤로
-              </Text> */}
+                  <SearchFetchJudicial
+                    setSearchText={setSearchText}
+                    setLawData={setLawData}
+                    searchText={searchText}
+                    setIsDetail={setIsDetail}
+                    setIsAnalysis={setIsAnalysis}
+                    setSearchKeyword={setSearchKeyword}
+                    setClickedClassName={setClickedClassName}
+                  />
                 </View>
-                <View style={[styles.tab__detail__title__box2]}>
-                  <Text style={styles.tabtitle}>판결 내용</Text>
-                </View>
-              </View>
-            ) : isAnalysis ? (
-              <></>
-            ) : lawData.length > 0 ? (
-              <View style={styles.tabbar}>
-                <View
-                  style={[styles.tab__title__box, styles[clickedClassName[0]]]}>
-                  <Text onPress={() => selectOne(0)} style={styles.tabtitle}>
-                    전체
-                  </Text>
-                </View>
-                <View
-                  style={[styles.tab__title__box, styles[clickedClassName[1]]]}>
-                  <Text onPress={() => selectOne(1)} style={styles.tabtitle}>
-                    승인
-                  </Text>
-                </View>
-                <View
-                  style={[styles.tab__title__box, styles[clickedClassName[2]]]}>
-                  <Text onPress={() => selectOne(2)} style={styles.tabtitle}>
-                    기각
-                  </Text>
-                </View>
-              </View>
-            ) : (
-              <View style={styles.tabbar}>
-                <View>
-                  <Text
-                    onPress={() => selectOne(0)}
-                    style={styles.clickTabtitle}></Text>
-                </View>
-                <View>
-                  <Text
-                    onPress={() => selectOne(1)}
-                    style={styles.clickTabtitle}></Text>
-                </View>
-                <View>
-                  <Text
-                    onPress={() => selectOne(2)}
-                    style={styles.clickTabtitle}></Text>
+                <View style={styles.tabbar}>
+                  <View
+                    style={[
+                      styles.tab__title__box,
+                      styles[clickedClassName[0]],
+                    ]}>
+                    <Text onPress={() => selectOne(0)} style={styles.tabtitle}>
+                      전체
+                    </Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.tab__title__box,
+                      styles[clickedClassName[1]],
+                    ]}>
+                    <Text onPress={() => selectOne(1)} style={styles.tabtitle}>
+                      승인
+                    </Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.tab__title__box,
+                      styles[clickedClassName[2]],
+                    ]}>
+                    <Text onPress={() => selectOne(2)} style={styles.tabtitle}>
+                      기각
+                    </Text>
+                  </View>
                 </View>
               </View>
-            )}
-          </View>
+            </>
+          ) : (
+            <>
+              <View style={styles.header}>
+                <View style={styles.headerSearch}>
+                  <Ionicons
+                    name={'search-outline'}
+                    size={22}
+                    color={'rgba(0, 0,0,0.5)'}
+                  />
+                  <SearchFetchJudicial
+                    setSearchText={setSearchText}
+                    setLawData={setLawData}
+                    searchText={searchText}
+                    setIsDetail={setIsDetail}
+                    setIsAnalysis={setIsAnalysis}
+                    setSearchKeyword={setSearchKeyword}
+                    setClickedClassName={setClickedClassName}
+                  />
+                </View>
+                <View style={styles.tabbar}>
+                  <View
+                    style={[
+                      styles.tab__title__box,
+                      styles[clickedClassName[0]],
+                    ]}>
+                    <Text onPress={() => selectOne(0)} style={styles.tabtitle}>
+                      전체
+                    </Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.tab__title__box,
+                      styles[clickedClassName[1]],
+                    ]}>
+                    <Text onPress={() => selectOne(1)} style={styles.tabtitle}>
+                      승인
+                    </Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.tab__title__box,
+                      styles[clickedClassName[2]],
+                    ]}>
+                    <Text onPress={() => selectOne(2)} style={styles.tabtitle}>
+                      기각
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </>
+          )}
 
           <View style={styles.body}>
             <View style={styles.main}>

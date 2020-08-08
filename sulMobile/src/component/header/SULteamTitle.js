@@ -14,14 +14,26 @@ const styles = StyleSheet.create({
   },
   titleBox: {
     justifyContent: 'center',
-    paddingHorizontal: 16,
-    paddingBottom: 5,
+    paddingHorizontal: 20,
   },
   title: {
-    fontSize: 24,
-    color: 'gray',
+    fontWeight: '200',
+    fontSize: 30,
+    color: 'black',
   },
 });
+// title: {
+//   fontWeight: '200',
+//   fontSize: 30,
+//   color: 'black',
+//   marginVertical: 10,
+// },
+// titleBox: {
+//   flex: 1.1,
+//   backgroundColor: 'white',
+//   justifyContent: 'flex-end',
+//   paddingHorizontal: 20,
+// },
 
 export default function SULteamTitle() {
   return (
