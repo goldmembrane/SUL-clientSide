@@ -5,4 +5,4 @@
 [![redux Badge](https://img.shields.io/badge/redux-4.0.5-brightgreen)](https://github.com/reduxjs/redux)
 <br/>
 자신의 소송이 기각 될 확률을 구하는 웹 애플리케이션 클라이언트 사이드입니다
-![ezgif com-optimize](https://user-images.githubusercontent.com/53177533/89711519-a77d1a80-d9c5-11ea-98b2-5c6f784bc96b.gif)
+
