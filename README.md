@@ -44,6 +44,6 @@ React-native<br />
 React-navigation<br />
 React-Hooks<br />
 Redux<br />
-React-native-maps<br /><br />
+React-native-maps<br />
 React-native-cheerio<br />
 
