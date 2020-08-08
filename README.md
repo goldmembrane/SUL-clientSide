@@ -15,6 +15,8 @@
 이번 프로젝트인 SUL(Support Your Lawsuit)은 이런 생각에서 출발하였습니다.
 자신의 분쟁 상황을 키워드로 검색해 이전 판례들을 찾아보고, 그 판례중에서 얼마나 기각되었는지 비율을 계산해주는 서비스를 기획했습니다.
 
+# 서비스 내용
+
 # Flow Chart
 <details>
 <summary>UI 기능 플로우 펼쳐보기</summary>
@@ -24,4 +26,24 @@
 <summary>Front-end Flow</summary>
 <img width="551" alt="work" src="https://user-images.githubusercontent.com/53177533/89712046-3fc8ce80-d9c9-11ea-9f66-3ce52e355482.png">
 </details>
+
+# Server
+
+# Clinet
+⭐ 기능
+팔레트 조회
+팔레트 편집 및 생성
+팔레트 공유 및 다운로드
+회원가입
+로그인
+로그아웃
+회원 정보 수정
+📚 주요 Library
+React
+React-native
+React-navigation
+React-Hooks
+Redux
+React-native-maps
+React-native-cheerio
 
