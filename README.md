@@ -30,7 +30,7 @@
 # Server
 
 # Clinet
-⭐ 기능<br />
+## ⭐ 기능<br />
 팔레트 조회<br />
 팔레트 편집 및 생성<br />
 팔레트 공유 및 다운로드<br />
@@ -38,7 +38,7 @@
 로그인<br />
 로그아웃<br />
 회원 정보 수정<br />
-📚 주요 Library<br />
+## 📚 주요 Library<br />
 React<br />
 React-native<br />
 React-navigation<br />
