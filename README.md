@@ -73,6 +73,6 @@ React-native-cheerio<br />
 <hr>
 
 # :people_holding_hands: Position
-### 황병현 : full-stack
-### 김준섭 : full-stack
-### 조규창 : front-end
+### 황병현 : full-stack 📧 Gmail : extinctictworld@gmail.com
+### 김준섭 : full-stack 📧 Gmail : wnstjq616@gmail.com
+### 조규창 : front-end 📧 Gmail : codingc1@gmail.com
