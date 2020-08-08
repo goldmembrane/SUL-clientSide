@@ -19,10 +19,9 @@
 <details>
 <summary>기능 플로우 펼쳐보기</summary>
 <img width="551" alt="work" src="https://user-images.githubusercontent.com/53177533/89711843-caa8c980-d9c7-11ea-86eb-dc965e54abab.png">
-
-:balloon: Start project ! <br />
-:one: 프로젝트명과 팀명 선정<br />
-:two: Wiki 틀 작성<br />
-:three: Web wireframe 1차 제작<br />
+</details>
+<details>
+<summary>Front-end</summary>
+<img width="551" alt="work" src="https://user-images.githubusercontent.com/53177533/89712046-3fc8ce80-d9c9-11ea-9f66-3ce52e355482.png">
 </details>
 
