@@ -65,3 +65,14 @@ Redux<br />
 React-native-maps<br />
 React-native-cheerio<br />
 
+# :evergreen_tree: 팀 구성
+## 팀장
+#### 황병현
+## 팀원
+#### 김준섭, 조규창
+<hr>
+
+# :people_holding_hands: Position
+### 황병현 : full-stack
+### 김준섭 : full-stack
+### 조규창 : front-end
