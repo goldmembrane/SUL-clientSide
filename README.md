@@ -18,6 +18,7 @@
 # Flow Chart
 <details>
 <summary>기능 플로우 펼쳐보기</summary>
+  <a href ="https://www.figma.com/file/DLI1vMQZSNUYQycFBnlJO2/SUL-Mobile">📝 WireFrame</a>
 :balloon: Start project ! <br />
 :one: 프로젝트명과 팀명 선정<br />
 :two: Wiki 틀 작성<br />
