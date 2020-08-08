@@ -14,3 +14,13 @@
 그로 인해 소송을 준비하는 시간과 재화가 낭비되는 것이 걱정된다는 점을 생각해보았습니다.
 이번 프로젝트인 SUL(Support Your Lawsuit)은 이런 생각에서 출발하였습니다.
 자신의 분쟁 상황을 키워드로 검색해 이전 판례들을 찾아보고, 그 판례중에서 얼마나 기각되었는지 비율을 계산해주는 서비스를 기획했습니다.
+
+# Flow Chart
+<details>
+<summary>기능 플로우 펼쳐보기</summary>
+:balloon: Start project ! <br />
+:one: 프로젝트명과 팀명 선정<br />
+:two: Wiki 틀 작성<br />
+:three: Web wireframe 1차 제작<br />
+</details>
+
