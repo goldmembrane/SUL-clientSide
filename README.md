@@ -74,6 +74,8 @@ jsonwebtoken <br />
 mysql <br />
 sequelize-cli <br />
 crypto <br />
+xml-js <br />
+cheerio <br />
 # :evergreen_tree: 팀 구성
 ## 팀장
 #### 황병현
