@@ -357,7 +357,10 @@ export default function UserInfo(props) {
                 </View>
               </View>
               <View style={styles.history}>
-                <HistoryList historyData={historyData} />
+                <HistoryList
+                  historyData={historyData}
+                  navigation={props.navigation}
+                />
               </View>
             </View>
           ) : (

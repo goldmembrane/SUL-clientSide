@@ -20,13 +20,18 @@ const styles = StyleSheet.create({
   },
 });
 
-function HistoryList({historyData}) {
+function HistoryList({historyData, navigation}) {
   let historyScreen;
   if (historyData && historyData.length > 0) {
     historyScreen = (
       <View style={styles.history}>
         {historyData.map((his, index) => (
-          <HistoryListBox key={index} index={index} his={his} />
+          <HistoryListBox
+            key={his.id}
+            index={index}
+            his={his}
+            navigation={navigation}
+          />
         ))}
       </View>
     );
