@@ -58,6 +58,7 @@
 지도 기능<br />
 회원 정보 조회, 수정<br />
 ## 📚 주요 Library<br />
+###- Client <br />
 React<br />
 React-native<br />
 React-navigation<br />
@@ -66,6 +67,13 @@ Redux<br />
 React-native-maps<br />
 React-native-cheerio<br />
 
+###- Server <br />
+express <br />
+axios <br />
+jsonwebtoken <br />
+mysql <br />
+sequelize-cli <br />
+crypto <br />
 # :evergreen_tree: 팀 구성
 ## 팀장
 #### 황병현
