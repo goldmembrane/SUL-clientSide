@@ -5,68 +5,50 @@ import ParserDetail from './parserDetail';
 import {senTenCing} from '../../store/modules/sentencing';
 import {isLoding} from '../../store/modules/loding';
 import goDetailFuntion from '../helper/goDetailFuntion';
-// const styles = StyleSheet.create({
-//   rowBox: {
-//     width: '100%',
-//     height: '25%',
-//     justifyContent: 'center',
-//     alignContent: 'space-around',
-//   },
-//   box: {
-//     width: '40%',
-//     height: '35%',
-//     justifyContent: 'center',
-//     backgroundColor: 'gray',
-//     marginVertical: 10,
-//   },
-//   title: {
-//     fontSize: 20,
-//     color: 'white',
-//   },
-// });
-
-// export const SearchListBox = (props) => (
-
-//   <View style={styles.box}>
-//     <Text style={styles.title}>{props.law?.title}</Text>
-//   </View>
-// );
 
 const styles = StyleSheet.create({
-  history: {
-    flex: 6,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    width: '100%',
-
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: 'black',
-  },
-  history__contentbox: {
-    width: '100%',
+  list__contentbox: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 7,
+    margin: 0,
+    marginHorizontal: 10,
+    borderTopColor: '#E4E4E4',
+    borderTopWidth: 1,
   },
-  dismiss: {
-    backgroundColor: 'rgba(255, 56, 56,0.2)',
+  list__contentbox__judi: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 50,
+    height: 40,
+    borderWidth: 0.5,
+    borderColor: 'rgba(50,50,50,0.2)',
+    borderRadius: 50,
   },
   acc: {
-    backgroundColor: 'rgba(126, 255, 245,0.2)',
+    fontWeight: '200',
+    color: 'green',
   },
-  list__contentbox: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    marginHorizontal: 5,
-    // backgroundColor: '#C4C4C4',
-    borderBottomColor: '#C4C4C4',
-    borderBottomWidth: 1,
+  dismiss: {
+    fontWeight: '200',
+    color: 'red',
+    opacity: 0.6,
+  },
+  list__contentbox__law: {
+    flex: 9,
   },
   list__title: {
+    paddingTop: 15,
+    paddingLeft: 15,
+    paddingRight: 15,
     fontSize: 16,
+    fontWeight: '300',
+  },
+  list__subtitle: {
+    color: 'rgba(50, 50, 50,1)',
+    fontWeight: '200',
   },
 });
 //한 줄에 두개 씩 박스를 만들어냄
@@ -82,28 +64,6 @@ export const SearchListBox = (props) => {
 
   const dispatch = useDispatch();
 
-  // const goDetail = async (text) => {
-  //   console.log(text, 'searchListBox');
-  //   // const text = e._dispatchInstances.memoizedProps.children;
-  //   // console.log(text, 'value??');
-  //   // if (typeof text !== 'string' || text == '') {
-  //   //   console.log('not');
-  //   //   return;
-  //   // }
-  //   try {
-  //     dispatch(isLoding(true));
-  //     let a = await ParserDetail(text);
-  //     //디테일 화면으로 넘어감
-  //     props.setIsDetail(true);
-  //     console.log(a, 'aaa');
-  //     //redux start!!!
-  //     dispatch(senTenCing(a));
-  //     dispatch(isLoding(false));
-  //   } catch (e) {
-  //     dispatch(isLoding(false));
-  //     console.log(e, 'err');
-  //   }
-  // };
   const goDetail = async (text) => {
     try {
       dispatch(isLoding(true));
@@ -117,54 +77,33 @@ export const SearchListBox = (props) => {
     }
   };
   return (
-    <View
-      style={[
-        styles.list__contentbox,
-        styles[props.law.accept ? 'acc' : props.law.dismiss ? 'dismiss' : ''],
-      ]}>
-      <Text
-        style={styles.list__title}
-        onPress={() =>
-          goDetail(
-            props.law.accept
-              ? props.law.accept
-              : props.law.dismiss
-              ? props.law.dismiss
-              : '',
-          )
-        }>
-        {props?.index + 1} : {props.law?.title}
-        {/* {props.law.title.slice(0, 28)}
-        {props.law.subtitle.slice(5, 45)} */}
-      </Text>
+    <View style={[styles.list__contentbox]}>
+      <View style={styles.list__contentbox__judi}>
+        <Text
+          style={[
+            styles[
+              props.law.accept ? 'acc' : props.law.dismiss ? 'dismiss' : ''
+            ],
+          ]}>
+          {props.law.accept ? `승인` : props.law.dismiss ? `기각` : ''}
+        </Text>
+      </View>
+      <View style={styles.list__contentbox__law}>
+        <Text
+          style={styles.list__title}
+          onPress={() =>
+            goDetail(
+              props.law.accept
+                ? props.law.accept
+                : props.law.dismiss
+                ? props.law.dismiss
+                : '',
+            )
+          }>
+          {props.law?.title}
+        </Text>
+        <Text style={styles.list__subtitle}>{props.law?.subtitle}</Text>
+      </View>
     </View>
-    /* <View>
-          <Text>판례정보</Text>
-        </View> */
-
-    /* <Text onPress={(text) => goDetail(text)}>77690</Text> */
-
-    /* <Text>{day}</Text>
-        {content.map((ele, index) => {
-          return <Text key={index}>{ele}</Text>;
-        })} */
   );
 };
-
-// <View style={styles.history}>
-//   <View style={styles.history__contentbox}>
-//     <View style={{paddingLeft: 20, width: '85%'}}>
-//       <Text style={styles.history__content__title}>
-//         대법원 1980. 5. 20. 선고 80도306 전원합의체 판결 ★
-//         [(가)내란목적살인,(나)내란수괴
-//       </Text>
-//       <View style={{flexDirection: 'row'}}>
-//         <Text style={{marginRight: 10}}>폭력으로 다리 피해</Text>
-//         <Text style={styles.history__content__day}>20.07.26</Text>
-//       </View>
-//     </View>
-//     <View style={{paddingRight: 20}}>
-//       <Text style={styles.history__content__Percentage}>25%</Text>
-//     </View>
-//   </View>
-// </View>;

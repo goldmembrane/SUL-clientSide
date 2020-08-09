@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 //한 줄에 두개 씩 박스를 만들어냄
 //인풋으로 배열을 받아야함
 const SearchList = ({setIsDetail, laws}) => {
-  // console.log('por', props);
+  console.log('por :::::::::::::::: ', laws);
   return (
     <ScrollView style={styles.allBox}>
       {laws?.map(
