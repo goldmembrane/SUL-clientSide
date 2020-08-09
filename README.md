@@ -41,6 +41,10 @@
 <summary>Front-end Flow</summary>
 <img width="551" alt="work" src="https://user-images.githubusercontent.com/53177533/89712046-3fc8ce80-d9c9-11ea-9f66-3ce52e355482.png">
 </details>
+<details>
+<summary>Back-end Flow</summary>
+<img width="551" alt="server" src="https://user-images.githubusercontent.com/49430407/89738949-a0ced000-dab7-11ea-85ed-ab82697b3c24.png">
+</details>
 
 # Server
 ## ⭐ API 문서
