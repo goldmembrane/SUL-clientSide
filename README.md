@@ -49,7 +49,7 @@
 ## ⭐ API 문서
 하단의 하이퍼링크를 클릭하시면 API 문서로 연결됩니다.<br />
  <a href ="https://app.gitbook.com/@sul/s/sul/">📝 SUL-server API 문서</a><br />
-# Clinet
+# Client
 ## ⭐ 기능<br />
 홈 화면<br />
 로그인, 회원가입<br />
