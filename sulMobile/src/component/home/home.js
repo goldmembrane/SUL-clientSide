@@ -24,8 +24,13 @@ export default function HomeScreen() {
       <ImageBackground
         source={require('../../../assets/background/mainBackground1.jpg')}
         style={styles.bgImage}>
-        <Text style={styles.text}>{`     소송을 
-     소송답게`}</Text>
+        <View style={styles.top}>
+          <Text style={styles.logo}>SUL team</Text>
+        </View>
+        <View style={styles.bottom}>
+          <Text style={styles.text}>{`     당신의 
+     소송 파트너`}</Text>
+        </View>
       </ImageBackground>
     </View>
   );
@@ -34,13 +39,27 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   bgImage: {
     flex: 1,
-    justifyContent: 'center',
     width: '100%',
     height: '100%',
   },
+  top: {flex: 1, justifyContent: 'space-around', alignItems: 'center'},
+  bottom: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    fontSize: 50,
+    color: '#ffffff',
+    fontWeight: '100',
+  },
   text: {
+    flex: 2,
+    height: '50%',
     fontSize: 30,
     color: '#ffffff',
-    fontWeight: '200',
+    fontWeight: '300',
+    paddingLeft: 30,
   },
 });
