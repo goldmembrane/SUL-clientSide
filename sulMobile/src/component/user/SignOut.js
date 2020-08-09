@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     marginRight: WIDTH / 12,
     textAlign: 'right',
     fontSize: 16,
+    fontWeight: '300',
   },
 });
 

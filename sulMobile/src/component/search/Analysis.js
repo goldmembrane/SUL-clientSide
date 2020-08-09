@@ -1,111 +1,39 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useSelector} from 'react-redux';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {StyleSheet, View, Text} from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 // import fakeDataProbability from './fakeDataSearch/fakeDataProbability';
 
 const styles = StyleSheet.create({
   all: {flex: 1, backgroundColor: 'white'},
-  header: {
-    // marginTop: 70,
-    justifyContent: 'flex-end',
-    backgroundColor: 'white',
+  back__button: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    color: 'black',
+    fontSize: 24,
   },
-  body: {
-    flex: 6,
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    width: '100%',
-  },
-  mid__title: {
-    flex: 5,
-  },
-  main: {
-    flex: 2,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 50,
-  },
+  // title css
   title: {
-    fontSize: 24,
-    color: 'gray',
-  },
-  titleBox: {
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-    paddingBottom: 5,
-  },
-  inputBox: {
-    width: '100%',
-    height: 50,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 20,
-    marginVertical: 10,
   },
-  tabbar: {
-    width: '100%',
-    height: 40,
+  title__mainText: {padding: 10, fontSize: 30, fontWeight: '100'},
+  title__subText: {padding: 20, fontSize: 20, fontWeight: '100'},
+  // circle css
+  circle: {flex: 2, justifyContent: 'center', alignItems: 'center'},
+  // statistics css
+  statistics: {
+    flex: 1.5,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    // backgroundColor: '#F4F4F4',
-    marginVertical: 10,
-  },
-  tab__title__box: {
-    width: '25%',
-    flex: 1,
-    paddingVertical: 10,
-  },
-  tabtitle: {
-    textAlign: 'center',
-    color: 'black',
-    fontSize: 20,
-  },
-
-  mainText: {
-    textAlign: 'center',
-    color: 'black',
-    fontSize: 24,
-  },
-  mid__title: {
-    flex: 1,
-  },
-  mid__title__blank: {
-    flex: 1,
-  },
-  small__title__box: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    color: 'black',
-    fontSize: 24,
-  },
-
-  small__title__box__back: {
-    flex: 1,
-    textAlign: 'center',
-    color: 'black',
-    fontSize: 24,
-  },
-  small__title__box__title: {
-    textAlign: 'center',
-    color: 'black',
-    fontSize: 24,
-  },
-  mid__title__box: {
-    flex: 1,
-    width: '100%',
-    justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 30,
   },
-  mid__graph: {
-    flex: 2,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  statistics__table: {flex: 1, alignItems: 'center'},
+  statistics__table__text: {fontSize: 20, fontWeight: '100'},
+  statistics__table__num: {fontSize: 40, fontWeight: '100'},
 });
-const left = '<';
 
 function Analysis({setIsAnalysis, searchKeyword}) {
   let disMissData = useSelector((state) => state.dismissModule.dismiss);
@@ -153,52 +81,42 @@ function Analysis({setIsAnalysis, searchKeyword}) {
   }, [percentage]);
   return (
     <View style={styles.all}>
-      <View style={styles.header}>
-        {/* <View style={styles.titleBox}>
-          <Text style={styles.title}>SUL team</Text>
-        </View> */}
-        <View style={styles.tabbar}></View>
-        <View style={styles.small__title__box}>
-          <Text
-            style={styles.small__title__box__back}
-            onPress={() => setIsAnalysis(false)}>
-            {left}
-          </Text>
-          <Text style={styles.small__title__box__title}>
-            소송이 기각될 확률은?
-          </Text>
-          <Text style={styles.small__title__box__back}></Text>
-        </View>
+      <View style={styles.back__button}>
+        <Ionicons
+          name="chevron-back-sharp"
+          size={40}
+          color="gray"
+          onPress={() => setIsAnalysis(false)}
+          style={{paddingLeft: 10}}
+        />
+      </View>
+      <View style={styles.title}>
+        <Text style={styles.title__mainText}>{searchKeyword}</Text>
+        <Text style={styles.title__subText}>소송이 기각될 확률</Text>
       </View>
 
-      <View style={styles.body}>
-        <View style={styles.mid__title__blank}></View>
-        <View style={styles.mid__title}>
-          <View style={styles.mid__title__box}>
-            <Text style={styles.small__title__box__title}>
-              기각 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 총 &nbsp;&nbsp;
-            </Text>
-            <Text style={styles.small__title__box__title}>
-              {tmpDismiss} &nbsp; / &nbsp; {dismissData.total}
-            </Text>
-          </View>
+      <View style={styles.circle}>
+        <ProgressCircle
+          percent={Number(percentage)}
+          radius={100}
+          borderWidth={12}
+          // color="#3399FF"
+          // shadowColor="#999"
+          color="#f06b4e"
+          shadowColor="#91DC96"
+          bgColor="#fff">
+          <Text style={{fontSize: 28, fontWeight: '200'}}>{percentage} %</Text>
+        </ProgressCircle>
+      </View>
+
+      <View style={styles.statistics}>
+        <View style={styles.statistics__table}>
+          <Text style={styles.statistics__table__text}>총</Text>
+          <Text style={styles.statistics__table__num}>{dismissData.total}</Text>
         </View>
-        <View style={styles.mid__title__blank}></View>
-        <View style={styles.mid__graph}>
-          <ProgressCircle
-            percent={Number(percentage)}
-            radius={100}
-            borderWidth={30}
-            // color="#3399FF"
-            // shadowColor="#999"
-            color="red"
-            shadowColor="blue"
-            bgColor="#fff">
-            <Text style={{fontSize: 24}}>{percentage}%</Text>
-          </ProgressCircle>
-        </View>
-        <View style={styles.main}>
-          <Text style={styles.mainText}>검색어 : {searchKeyword}</Text>
+        <View style={styles.statistics__table}>
+          <Text style={styles.statistics__table__text}>기각</Text>
+          <Text style={styles.statistics__table__num}>{tmpDismiss}</Text>
         </View>
       </View>
     </View>

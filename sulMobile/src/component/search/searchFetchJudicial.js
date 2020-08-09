@@ -14,7 +14,7 @@ import {requestApiData} from '../../store/modules/actions';
 
 const styles = StyleSheet.create({
   inputBox: {
-    width: '100%',
+    width: '80%',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   textInputBox: {
-    width: '85%',
-    height: 50,
-    backgroundColor: '#F4F4F4',
+    width: '100%',
+    height: 45,
+    fontWeight: '200',
     borderRadius: 20,
     // borderRadius: 25,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     fontSize: 20,
     color: 'black',
   },
@@ -120,7 +120,7 @@ function SearchFetchJudicial(props) {
           //디스미스를 구해야하며 검색결과도 보내줘야함
           const getDismissData = await fetchDismiss(props.searchText);
           const dismissCount = getDismissData.data;
-          // console.log(dismissCount, 'count!!!');
+          console.log('dismissCount : ', getDismissData);
           if (isArr(dismissCount)) {
             dispatch(putDisMiss(dismissCount));
           } else {
@@ -191,9 +191,9 @@ function SearchFetchJudicial(props) {
         style={styles.textInputBox}
         autoFocus={true}
         underlineColorAndroid="'rgba(0, 0,0,0.5)',"
-        placeholder="검색하기"
+        placeholder="검색"
         placeholderTextColor="'rgba(0, 0,0,0.5)',"
-        selectionColor="#fff"
+        selectionColor="'rgba(0, 0,0,0.5)'"
         autoCapitalize="none"
         onChangeText={(text) => {
           props.setSearchText(text);

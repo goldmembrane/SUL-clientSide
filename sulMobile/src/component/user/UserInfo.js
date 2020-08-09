@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   username: {
-    flex: 0.5,
+    flex: 1,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -47,10 +47,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginVertical: 10,
-    borderRadius: 20,
-
-    borderWidth: 1,
-    borderColor: 'black',
   },
   history: {
     flex: 6,
@@ -58,10 +54,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     width: '100%',
-
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: 'black',
   },
   profilePicBox: {
     flex: 4,
@@ -89,7 +81,8 @@ const styles = StyleSheet.create({
   profileInfoBox__text: {
     padding: 16,
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 24,
+    fontWeight: '200',
   },
   profileInfoBox__text__button: {
     // height: HEIGHT / 16,
@@ -109,6 +102,7 @@ const styles = StyleSheet.create({
     color: 'black',
     padding: 10,
     fontSize: 24,
+    fontWeight: '200',
   },
   history__contentbox: {
     width: '100%',
@@ -198,6 +192,7 @@ export default function UserInfo(props) {
     //     console.log(e, 'fetchKeyWords');
     //   });
   }, []);
+  console.log('historydata : ', historyData);
   function aa() {
     lawgo('ㅁㅁ')
       .then((data) => {
@@ -251,27 +246,39 @@ export default function UserInfo(props) {
             <View style={styles.all}>
               <View style={styles.header}>
                 <SULteamTitle />
-                {/* <View style={styles.titleBox}>
-            <Text style={styles.title}>SUL team</Text>
-          </View> */}
               </View>
               <View style={styles.username}>
-                {isEdName ? (
-                  <TextInput
-                    style={styles.inputBox}
-                    underlineColorAndroid="rgba(0,0,0,0)"
-                    placeholder="username"
-                    placeholderTextColor="'rgba(255, 255,255,0.5)',"
-                    autoCapitalize="none"
-                    //"#ffffff"
-                    defaultValue={userInfo.username}
-                    selectionColor="black"
-                    onChangeText={(text) => {
-                      setUserName(text);
-                    }}
-                  />
+                {isEdit ? (
+                  <View style={{flexDirection: 'row'}}>
+                    <Icon
+                      name="pencil"
+                      size={18}
+                      color="black"
+                      onPress={() => {
+                        setIsEdName(true);
+                      }}
+                    />
+                    <TextInput
+                      style={styles.inputBox}
+                      underlineColorAndroid="rgba(0,0,0,0)"
+                      placeholder="username"
+                      placeholderTextColor="'rgba(255, 255,255,0.5)',"
+                      autoCapitalize="none"
+                      //"#ffffff"
+                      defaultValue={userInfo.username}
+                      selectionColor="black"
+                      onChangeText={(text) => {
+                        setUserName(text);
+                      }}
+                    />
+                  </View>
                 ) : (
-                  <Text style={{color: 'black', fontSize: 20}}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontSize: 20,
+                      fontWeight: '300',
+                    }}>
                     {userInfo.username}
                   </Text>
                 )}
@@ -286,7 +293,7 @@ export default function UserInfo(props) {
                     upDateUserPicUrl={upDateUserPicUrl.bind(this)}
                   />
                   <View style={{flexDirection: 'row'}}>
-                    {isEdit ? (
+                    {/* {isEdit ? (
                       <Icon
                         name="pencil"
                         size={18}
@@ -297,7 +304,7 @@ export default function UserInfo(props) {
                       />
                     ) : (
                       <></>
-                    )}
+                    )} */}
 
                     {/* <Text style={{color: 'black'}}>{userInfo.username}님</Text> */}
                   </View>
@@ -331,10 +338,9 @@ export default function UserInfo(props) {
                     </View>
                   ) : (
                     <Text
-                      style={styles.profileInfoBox__text}
+                      style={styles.profileInfoBox__text__button}
                       onPress={() => {
                         setIsEdit(true);
-                        console.log('???');
                       }}>
                       정보수정
                     </Text>
@@ -343,17 +349,12 @@ export default function UserInfo(props) {
 
                 {/* </View> */}
               </View>
-              <View>
+              <View style={{alignItems: 'center'}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Text style={styles.headline}>──────────────────────── </Text>
                   <Text style={styles.history__maintitle}>History</Text>
-                  {/* <Text
-                style={{
-                  alignSelf: 'center',
-                  fontSize: 20,
-                }}>
-                refresh
-              </Text> */}
                   <RefreshButton setHistoryData={setHistoryData} />
+                  <Text style={styles.headline}> ────────────────────────</Text>
                 </View>
               </View>
               <View style={styles.history}>

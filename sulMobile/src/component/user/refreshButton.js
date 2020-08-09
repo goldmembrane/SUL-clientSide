@@ -4,6 +4,7 @@ import {useDispatch} from 'react-redux';
 import {fetchKeyGet} from '../helper/fetchKeyWord';
 import {isLoding} from '../../store/modules/loding';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 function RefreshButton({setHistoryData}) {
   const dispatch = useDispatch();
@@ -27,16 +28,7 @@ function RefreshButton({setHistoryData}) {
 
   return (
     <View>
-      {/* <Text
-        style={{
-          alignSelf: 'center',
-          paddingVertical: 12,
-          fontSize: 20,
-        }}
-        onPress={refreshKeyWord}>
-        refresh
-      </Text> */}
-      <Icon name="refresh" size={20} color="black" onPress={refreshKeyWord} />
+      <Ionicons name="refresh-outline" size={20} onPress={refreshKeyWord} />
     </View>
   );
 }

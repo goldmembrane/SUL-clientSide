@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // backgroundColor: 'white',
     // width: '100%',
-
     // borderRadius: 20,
     // borderWidth: 1,
     // borderColor: 'black',
@@ -24,7 +23,7 @@ function HistoryList({historyData, navigation}) {
   let historyScreen;
   if (historyData && historyData.length > 0) {
     historyScreen = (
-      <View style={styles.history}>
+      <ScrollView style={{flex: 1}}>
         {historyData.map((his, index) => (
           <HistoryListBox
             key={his.id}
@@ -33,12 +32,14 @@ function HistoryList({historyData, navigation}) {
             navigation={navigation}
           />
         ))}
-      </View>
+      </ScrollView>
     );
   } else {
     historyScreen = <View></View>;
   }
-  return <ScrollView style={{paddingVertical: 10}}>{historyScreen}</ScrollView>;
+  return (
+    <View style={{paddingVertical: 10, height: '100%'}}>{historyScreen}</View>
+  );
 }
 
 export default HistoryList;

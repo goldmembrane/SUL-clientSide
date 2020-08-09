@@ -30,13 +30,6 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 24,
   },
-  // history__contentbox: {
-  //   width: '100%',
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   alignItems: 'center',
-  //   paddingVertical: 7,
-  // },
   history__contentbox: {
     width: '100%',
     flexDirection: 'row',
@@ -47,6 +40,7 @@ const styles = StyleSheet.create({
   history__content__title: {
     marginBottom: 5,
     fontSize: 18,
+    fontWeight: '200',
   },
   history__content__day: {
     color: 'gray',
@@ -66,41 +60,21 @@ function History({index, his, navigation}) {
     <View style={styles.history__contentbox}>
       <View>
         {/* <View style={{paddingLeft: 20, width: '85%'}}> */}
-        <Text
-          style={styles.history__content__title}
-          onPress={() => {
-            navigation.navigate('Search', his.keyword);
-          }}>
-          {index || index == 0 ? index : ''} : {his.keyword || ''}
-        </Text>
         {/* <Text onPress={() => delKeyWord(his.id)}>Del</Text> */}
         {/* <View style={{flexDirection: 'row'}}>
           <Text style={{marginRight: 10}}>폭력으로 다리 피해</Text>
           <Text style={styles.history__content__day}>20.07.26</Text>
         </View> */}
+        <Text
+          onPress={() => {
+            navigation.navigate('Search', his.keyword);
+          }}
+          style={styles.history__content__title}>
+          {his.keyword}
+        </Text>
       </View>
-      {/* <View style={{paddingRight: 20}}>
-        <Text style={styles.history__content__Percentage}>25%</Text>
-      </View> */}
     </View>
   );
 }
 
 export default History;
-{
-  /* <View style={styles.history__contentbox}>
-<View style={{paddingLeft: 20, width: '85%'}}>
-  <Text style={styles.history__content__title}>
-    대법원 1980. 5. 20. 선고 80도306 전원합의체 판결 ★
-    [(가)내란목적살인,(나)내란수괴
-  </Text>
-  <View style={{flexDirection: 'row'}}>
-    <Text style={{marginRight: 10}}>폭력으로 다리 피해</Text>
-    <Text style={styles.history__content__day}>20.07.26</Text>
-  </View>
-</View>
-<View style={{paddingRight: 20}}>
-  <Text style={styles.history__content__Percentage}>25%</Text>
-</View>
-</View> */
-}
