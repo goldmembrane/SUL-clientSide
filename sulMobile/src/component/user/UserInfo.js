@@ -248,20 +248,30 @@ export default function UserInfo(props) {
                 <SULteamTitle />
               </View>
               <View style={styles.username}>
-                {isEdName ? (
-                  <TexItnput
-                    style={styles.inputBox}
-                    underlineColorAndroid="rgba(0,0,0,0)"
-                    placeholder="username"
-                    placeholderTextColor="'rgba(255, 255,255,0.5)',"
-                    autoCapitalize="none"
-                    //"#ffffff"
-                    defaultValue={userInfo.username}
-                    selectionColor="black"
-                    onChangeText={(text) => {
-                      setUserName(text);
-                    }}
-                  />
+                {isEdit ? (
+                  <View style={{flexDirection: 'row'}}>
+                    <Icon
+                      name="pencil"
+                      size={18}
+                      color="black"
+                      onPress={() => {
+                        setIsEdName(true);
+                      }}
+                    />
+                    <TextInput
+                      style={styles.inputBox}
+                      underlineColorAndroid="rgba(0,0,0,0)"
+                      placeholder="username"
+                      placeholderTextColor="'rgba(255, 255,255,0.5)',"
+                      autoCapitalize="none"
+                      //"#ffffff"
+                      defaultValue={userInfo.username}
+                      selectionColor="black"
+                      onChangeText={(text) => {
+                        setUserName(text);
+                      }}
+                    />
+                  </View>
                 ) : (
                   <Text
                     style={{
@@ -283,7 +293,7 @@ export default function UserInfo(props) {
                     upDateUserPicUrl={upDateUserPicUrl.bind(this)}
                   />
                   <View style={{flexDirection: 'row'}}>
-                    {isEdit ? (
+                    {/* {isEdit ? (
                       <Icon
                         name="pencil"
                         size={18}
@@ -294,7 +304,7 @@ export default function UserInfo(props) {
                       />
                     ) : (
                       <></>
-                    )}
+                    )} */}
 
                     {/* <Text style={{color: 'black'}}>{userInfo.username}님</Text> */}
                   </View>
@@ -331,7 +341,6 @@ export default function UserInfo(props) {
                       style={styles.profileInfoBox__text__button}
                       onPress={() => {
                         setIsEdit(true);
-                        console.log('???');
                       }}>
                       정보수정
                     </Text>
@@ -349,7 +358,10 @@ export default function UserInfo(props) {
                 </View>
               </View>
               <View style={styles.history}>
-                <HistoryList historyData={historyData} />
+                <HistoryList
+                  historyData={historyData}
+                  navigation={props.navigation}
+                />
               </View>
             </View>
           ) : (

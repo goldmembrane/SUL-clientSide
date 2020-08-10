@@ -20,6 +20,9 @@ export function fetchKeyGet() {
   return axios.get(baseUrl + '/keyword/get');
 }
 export function fetchKeyDel(keyword) {
-  const obj = {keyword};
-  return axios.delete(baseUrl + 'keyword/delete', obj);
+  return axios.delete(baseUrl + 'keyword/delete', {
+    params: {
+      id: keyword,
+    },
+  });
 }
