@@ -41,9 +41,6 @@ const Stack = createStackNavigator();
 
 function Index(props) {
   const isLoggedin = useIsLoggedin();
-  console.log('isLoggedin : ', isLoggedin);
-  // return isLoggedin ? <View>true</View> : <View>false</View>;
-  console.log('props :', props);
   return (
     <NavigationContainer>
       {isLoggedin ? (
@@ -78,7 +75,6 @@ function Index(props) {
           <Tab.Screen name="UserInfo" component={UserInfo} />
         </Tab.Navigator>
       ) : (
-        // <Stack.Screen name="SignIn" component={SignIn} />
         <Tab.Navigator
           screenOptions={({route}) => ({
             tabBarVisible: false,

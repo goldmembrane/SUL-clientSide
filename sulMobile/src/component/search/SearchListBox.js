@@ -1,7 +1,6 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {StyleSheet, View, Text} from 'react-native';
-import ParserDetail from './parserDetail';
 import {senTenCing} from '../../store/modules/sentencing';
 import {isLoding} from '../../store/modules/loding';
 import goDetailFuntion from '../helper/goDetailFuntion';

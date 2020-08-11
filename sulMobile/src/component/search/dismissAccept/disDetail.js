@@ -10,9 +10,7 @@ const styles = StyleSheet.create({
   header: {marginTop: 70, justifyContent: 'flex-end', backgroundColor: 'white'},
   body: {
     flex: 1,
-    // justifyContent: 'center',
     backgroundColor: 'white',
-    // width: '100%',
   },
   title: {
     flex: 1,
@@ -77,25 +75,8 @@ function DisDetail(props) {
       .catch((e) => {
         dispatch(isLoding(false));
       });
-    // text = text.slice(text.indexOf('precSeq=') + 8, text.indexOf('&mode=0'));
-    // // console.log(text);
-    // try {
-    //   dispatch(isLoding(true));
-    //   let a = await ParserDetail(text);
-    //   //디테일 화면으로 넘어감
-    //   props.setIsDetail(true);
-    //   //redux start!!!
-    //   dispatch(senTenCing(a));
-    //   dispatch(isLoding(false));
-    // } catch (e) {
-    //   dispatch(isLoding(false));
-    //   console.log(e, 'err');
-    // }
   };
 
-  // const arr = disMissData.map((ele, index) => (
-  //   <Text key={index}>{ele.title}</Text>
-  // ));
   const arr = [];
   for (let i = 0; i < disMissData.length; i++) {
     if (i > 49) {

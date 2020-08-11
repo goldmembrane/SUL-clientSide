@@ -6,7 +6,6 @@ const {width: WIDTH, height: HEIGHT} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   all: {flex: 1, backgroundColor: 'white'},
-  // header: {marginTop: 70, justifyContent: 'flex-end', backgroundColor: 'white'},
   header: {
     marginTop: HEIGHT / 14,
     justifyContent: 'flex-end',
@@ -22,18 +21,6 @@ const styles = StyleSheet.create({
     color: 'black',
   },
 });
-// title: {
-//   fontWeight: '200',
-//   fontSize: 30,
-//   color: 'black',
-//   marginVertical: 10,
-// },
-// titleBox: {
-//   flex: 1.1,
-//   backgroundColor: 'white',
-//   justifyContent: 'flex-end',
-//   paddingHorizontal: 20,
-// },
 
 export default function SULteamTitle() {
   return (

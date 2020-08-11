@@ -21,7 +21,6 @@ function SignOut({navigation}) {
       Alert.alert('로그아웃 하였습니다.', '');
       onConfirmLogin(false);
     });
-    //navigation.navigate('Home')
   }
   return (
     <Text style={styles.profileInfoBox__logout} onPress={goSignOut}>

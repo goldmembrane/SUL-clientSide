@@ -93,14 +93,6 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     fontWeight: '100',
     borderBottomWidth: 1.5,
-    // backgroundColor: '#ffffff', // 배경색이 없으면 그림자가 안보일 수 있음.
-    // //IOS
-    // shadowColor: 'black',
-    // //그림자색
-    // shadowOpacity: 0.5, //그림자 투명도
-    // shadowOffset: {width: 1, height: 1}, //그림자 위치
-    // //ANDROID
-    // elevation: 3,
   },
   main: {
     flex: 1,
@@ -136,7 +128,6 @@ function Search() {
   let isLodingNow = useSelector((state) => state.loding.isLoding);
   useEffect(() => {
     dispatch(senTenCing({title: 'hi', day: '11', data: [], num: '0'}));
-    console.log(sentencingData, '??????');
   }, []);
 
   //상태: 검색리스트 false, 디테일 true
@@ -167,14 +158,7 @@ function Search() {
       setClickedClassName(['notClick', 'notClick', 'click']);
     }
   }
-  // const searchHandler = () => {
-  //   if (searchText.length > 0) {
-  //     setLawData(fakeData);
-  //   } else {
-  //     setLawData([]);
-  //   }
-  // };
-  //SPA (Single Page Application)
+
   //하단 메인 페이지
   let mainScreen;
   if (lawData && lawData.length > 0) {
@@ -203,7 +187,6 @@ function Search() {
                   fontWeight: '200',
                   paddingHorizontal: 16,
                   overflow: 'hidden',
-                  // paddingLeft: WIDTH / 10,
                 }}>
                 {searchKeyword}
               </Text>
@@ -220,9 +203,6 @@ function Search() {
             </View>
             <SearchList laws={lawData} setIsDetail={setIsDetail} />
           </View>
-          {/* {lawData.map(law =>(<SearchList law={law} etIsDetail={setIsDetail} />))} */}
-
-          {/* <View style={styles.analysis__button}> */}
           <View
             style={{
               flex: 1,
@@ -254,8 +234,6 @@ function Search() {
     );
   }
   return (
-    // <ScrollView contentContainerStyle={{flexGrow: 1}}>
-    // <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
     <View style={styles.all}>
       {isLodingNow ? (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -395,8 +373,6 @@ function Search() {
         </>
       )}
     </View>
-    //   {/* </TouchableWithoutFeedback> */}
-    // {/* </ScrollView> */}
   );
 }
 

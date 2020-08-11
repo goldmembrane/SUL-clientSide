@@ -21,9 +21,6 @@ function LodingAnimation() {
       />
       <Text style={{fontSize: 40}}>Loding...... </Text>
     </View>
-    // <View>
-    //   <Text>hi</Text>
-    // </View>
   );
 }
 

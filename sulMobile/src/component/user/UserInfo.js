@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {
   StyleSheet,
-  ScrollView,
   View,
   Text,
   TextInput,
@@ -19,7 +18,6 @@ import SignOut from './SignOut';
 import {putUserInfo} from '../helper/fetchApi';
 import {fetchKeyGet} from '../helper/fetchKeyWord';
 import {lawgo} from '../helper/fetchApi';
-// import ParserLaw from './ParserLaw';
 import useConfirmLogin from '../../hooks/useConfirmLogin';
 import HistoryList from './historyList';
 import RefreshButton from './refreshButton';
@@ -85,13 +83,9 @@ const styles = StyleSheet.create({
     fontWeight: '200',
   },
   profileInfoBox__text__button: {
-    // height: HEIGHT / 16,
-    // borderRadius: HEIGHT / 40,
     padding: 16,
     textAlign: 'center',
     fontSize: 16,
-    // borderWidth: 1,
-    // borderColor: 'black',
   },
   //수정완료 취소 박스
   profileInfoBox__okcanclebox: {
@@ -121,12 +115,8 @@ const styles = StyleSheet.create({
   //이름 수정할 때 인풋
   inputBox: {
     width: 100,
-    // height: 50,
     backgroundColor: 'rgba(0, 0,0,0.3)',
-    // borderRadius: 10,
-    // paddingHorizontal: 16,
     fontSize: 16,
-    // color: 'black',
   },
 });
 
@@ -151,17 +141,8 @@ export default function UserInfo(props) {
         if (data.status === 200) {
           setIsLogin(true);
           setUserInfo(data.data);
-          // console.log(userInfo, 'data');
-          // Alert.alert(
-          //   '로그인 하였습니다.',
-          //   '',
-          //   [{text: '확인', onPress: () => navigation.navigate('Home')}],
-          //   {cancelable: false},
-          // );
-          //
           //History data get Start!!!
           fetchKeyGet().then((keyData) => {
-            console.log(keyData.data, 'keyData!!');
             if (keyData.data.length > 0) {
               setHistoryData(keyData.data);
             }
@@ -176,38 +157,15 @@ export default function UserInfo(props) {
           Alert.alert('아이디나 비밀번호가 맞지 않습니다.');
         } else {
           Alert.alert('esle error');
-          // Alert.alert(
-          //   'error',
-          //   '로그인에 문제가 있습니다',
-          //   [{text: '확인', onPress: () => navigation.navigate('Home')}],
-          //   {cancelable: false},
-          // );
         }
       });
-    // fetchKeqyWords()
-    //   .then((data) => {
-    //     console.log(data.data, 'fetchKeyWords');
-    //   })
-    //   .catch((e) => {
-    //     console.log(e, 'fetchKeyWords');
-    //   });
   }, []);
-  console.log('historydata : ', historyData);
-  function aa() {
-    lawgo('ㅁㅁ')
-      .then((data) => {
-        console.log(data.data);
-      })
-      .catch((e) => {
-        console.log(e, 'err');
-      });
-  }
+
   _onPressEmptySpace = () => {
     Keyboard.dismiss();
   };
   upDateUserPicUrl = (url) => {
     setUserPicUrl(url);
-    console.log(userPicUrl, 'pic url');
   };
   function toPutUserInfo() {
     putUserInfo(userName)
@@ -264,7 +222,6 @@ export default function UserInfo(props) {
                       placeholder="username"
                       placeholderTextColor="'rgba(255, 255,255,0.5)',"
                       autoCapitalize="none"
-                      //"#ffffff"
                       defaultValue={userInfo.username}
                       selectionColor="black"
                       onChangeText={(text) => {
@@ -285,33 +242,16 @@ export default function UserInfo(props) {
               </View>
               <View style={styles.infoBox}>
                 <View style={styles.profilePicBox}>
-                  {/* <View style={styles.circle}></View>
-                   */}
                   <PicProfile
                     isEdit={isEdit}
                     isEdit={isEdit}
                     upDateUserPicUrl={upDateUserPicUrl.bind(this)}
                   />
-                  <View style={{flexDirection: 'row'}}>
-                    {/* {isEdit ? (
-                      <Icon
-                        name="pencil"
-                        size={18}
-                        color="black"
-                        onPress={() => {
-                          setIsEdName(true);
-                        }}
-                      />
-                    ) : (
-                      <></>
-                    )} */}
-
-                    {/* <Text style={{color: 'black'}}>{userInfo.username}님</Text> */}
-                  </View>
+                  <View style={{flexDirection: 'row'}}></View>
                 </View>
                 <View style={styles.profileInfoBox}>
                   <SignOut {...props} />
-                  {/* <Text style={styles.profileInfoBox__logout}>Logout</Text> */}
+
                   <Text style={styles.profileInfoBox__text}>
                     {userInfo.email}
                   </Text>
@@ -346,8 +286,6 @@ export default function UserInfo(props) {
                     </Text>
                   )}
                 </View>
-
-                {/* </View> */}
               </View>
               <View style={{alignItems: 'center'}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>

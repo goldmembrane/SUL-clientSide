@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import React from 'react';
+import {View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {fetchKeyGet} from '../helper/fetchKeyWord';
 import {isLoding} from '../../store/modules/loding';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 function RefreshButton({setHistoryData}) {
