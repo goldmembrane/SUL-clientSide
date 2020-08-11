@@ -39,7 +39,6 @@ function Analysis({setIsAnalysis, searchKeyword}) {
   let disMissData = useSelector((state) => state.dismissModule.dismiss);
   let accData = useSelector((state) => state.accModule.acc);
 
-  // const [dismissData, setDismissData] = useState(fakeDataProbability);
   const [dismissData, setDismissData] = useState({
     total: disMissData.length + accData.length,
     dismiss: disMissData.length,
@@ -57,12 +56,6 @@ function Analysis({setIsAnalysis, searchKeyword}) {
         interTime = 300 / parseInt(per); // 퍼센트가 클수록 작아져야함 자주 상승 최대 0.3초
         interDismiss = dismissData.dismiss / per; //20퍼센트면 => 20번 상승 => 27개/20 1.35
       }
-      // setTimeout(() => {
-      //   if (per - i < 1) {
-      //     i = per;
-      //   }
-      //   setPercentage(i);
-      // }, 200);
       const timer = setTimeout(() => {
         if (percentage > per || per - percentage < 1) {
           clearInterval(timer);
@@ -100,8 +93,6 @@ function Analysis({setIsAnalysis, searchKeyword}) {
           percent={Number(percentage)}
           radius={100}
           borderWidth={12}
-          // color="#3399FF"
-          // shadowColor="#999"
           color="#f06b4e"
           shadowColor="#91DC96"
           bgColor="#fff">

@@ -77,7 +77,6 @@ function signUp({navigation}) {
             [{text: '확인', onPress: () => navigation.navigate('signin')}],
             {cancelable: false},
           );
-          // props.navigtion.navigate('Home')
         }
       })
       .catch((e) => {
@@ -86,16 +85,9 @@ function signUp({navigation}) {
           Alert.alert('이미 존재하는 유저입니다.');
           console.log('err409');
         } else {
-          Alert.alert(
-            'ERROR',
-            '회원가입에 문제가 있습니다',
-            [
-              // {text: 'Ask me later', onPress: () => console.warn('Ask me later pressed')},
-              // {text: 'NO', onPress: () => console.warn('NO Pressed'), style: 'cancel'},
-              // {text: '확인', onPress: () => navigation.navigate('Home')},
-            ],
-            {cancelable: false},
-          );
+          Alert.alert('ERROR', '회원가입에 문제가 있습니다', [], {
+            cancelable: false,
+          });
         }
       });
   }
@@ -141,9 +133,7 @@ function signUp({navigation}) {
   return (
     <ImageBackground
       source={require('../../assets/background/loginBackground1.jpg')}
-      style={styles.bgImage}
-      // resizeMethod="cover"
-    >
+      style={styles.bgImage}>
       <TouchableWithoutFeedback onPress={_onPressEmptySpace}>
         <KeyboardAvoidingView
           behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
@@ -165,7 +155,6 @@ function signUp({navigation}) {
                 onChangeText={(text) => {
                   setEmail(text);
                   chkEmail(text);
-                  // console.log(email, 'email');
                 }}
                 returnKeyType="next"
                 onSubmitEditing={() => {
@@ -182,7 +171,6 @@ function signUp({navigation}) {
                 placeholder="id"
                 placeholderTextColor="'rgba(255, 255,255,0.8)',"
                 autoCapitalize="none"
-                //"#ffffff"
                 selectionColor="#fff"
                 returnKeyType="next"
                 onChangeText={(text) => {

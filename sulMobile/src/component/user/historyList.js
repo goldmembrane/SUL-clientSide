@@ -1,17 +1,10 @@
 import React from 'react';
-import {StyleSheet, ScrollView, View, Text} from 'react-native';
+import {StyleSheet, ScrollView, View} from 'react-native';
 import HistoryListBox from './historyListBox';
 
 const styles = StyleSheet.create({
   history: {
     flex: 1,
-    // justifyContent: 'flex-start',
-    // alignItems: 'center',
-    // backgroundColor: 'white',
-    // width: '100%',
-    // borderRadius: 20,
-    // borderWidth: 1,
-    // borderColor: 'black',
   },
   title: {
     fontSize: 20,

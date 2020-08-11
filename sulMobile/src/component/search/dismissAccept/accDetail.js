@@ -10,9 +10,7 @@ const styles = StyleSheet.create({
   header: {marginTop: 70, justifyContent: 'flex-end', backgroundColor: 'white'},
   body: {
     flex: 1,
-    // justifyContent: 'center',
     backgroundColor: 'white',
-    // width: '100%',
   },
   title: {
     flex: 1,
@@ -77,10 +75,6 @@ function AccDetail(props) {
         dispatch(isLoding(false));
       });
   };
-
-  // const arr = accData.map((ele, index) => (
-  //   <Text key={index}>{ele.title}</Text>
-  // ));
   const arr = [];
   for (let i = 0; i < accData.length; i++) {
     if (i > 49) {

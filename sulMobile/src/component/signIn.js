@@ -81,29 +81,17 @@ function signIn({navigation}) {
       .then((data) => {
         if (data.status === 200) {
           // Alert.alert('로그인되었습니다');
-          Alert.alert(
-            '로그인 하였습니다.',
-            '',
-            // [{text: '확인', onPress: () => navigation.navigate('Home')}],
-            // {cancelable: false},
-          );
+          Alert.alert('로그인 하였습니다.', '');
           onConfirmLogin(true);
-          // props.navigtion.navigate('Home')
         }
       })
       .catch((e) => {
-        // Alert.alert(
-        //   'error',
-        //   '로그인에 문제가 있습니다',
-        //   [{text: '확인', onPress: () => navigation.navigate('Home')}],
-        //   {cancelable: false},
-        // );
         if (e.response.status === 400) {
           Alert.alert('아이디나 비밀번호가 맞지 않습니다.');
         } else {
           Alert.alert(
             '존재하지 않는 회원입니다.',
-            // [{text: '확인', onPress: () => navigation.navigate('Home')}],
+
             {cancelable: false},
           );
         }

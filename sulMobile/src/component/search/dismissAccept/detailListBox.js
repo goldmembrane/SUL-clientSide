@@ -10,9 +10,7 @@ const styles = StyleSheet.create({
   header: {marginTop: 70, justifyContent: 'flex-end', backgroundColor: 'white'},
   body: {
     flex: 1,
-    // justifyContent: 'center',
     backgroundColor: 'white',
-    // width: '100%',
   },
   title: {
     fontSize: 20,
@@ -24,7 +22,6 @@ const styles = StyleSheet.create({
   textBox: {
     paddingHorizontal: 16,
     paddingVertical: 5,
-    // paddingBottom: 5,
     fontSize: 16,
   },
   titleBox: {
@@ -50,10 +47,6 @@ function AccDetail(props) {
         dispatch(isLoding(false));
       });
   };
-
-  // const arr = accData.map((ele, index) => (
-  //   <Text key={index}>{ele.title}</Text>
-  // ));
   const arr = [];
   for (let i = 0; i < accData.length; i++) {
     if (i > 49) {
